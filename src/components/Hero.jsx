@@ -18,7 +18,7 @@ export default function Hero({ onSearch, loading }) {
           FHSA · TFSA · RRSP
         </p>
         <h1 className="mt-4 font-display text-[2.5rem] italic leading-[1.08] text-paper sm:text-[3.4rem]">
-          Find the right address
+          Find the right account
           <br />
           for every dollar.
         </h1>
