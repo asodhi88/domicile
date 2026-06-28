@@ -1,0 +1,100 @@
+// src/data/rules.js
+//
+// Pure logic, no UI. Takes a classified ticker + the user's current room
+// across FHSA / TFSA / RRSP and returns a ranked list of accounts with
+// plain-English reasoning, ending in a non-registered fallback when
+// registered room runs out.
+
+const ACCOUNT_LABEL = {
+  RRSP: "RRSP",
+  TFSA: "TFSA",
+  FHSA: "FHSA",
+  NONREG: "Non-registered",
+};
+
+// Priority order of registered accounts per withholding category.
+// Non-registered is never first — it's always the fallback once
+// registered room is exhausted.
+const PRIORITY = {
+  RRSP_EXEMPT: ["RRSP", "TFSA", "FHSA"],
+  ALWAYS_APPLIES: ["TFSA", "FHSA", "RRSP"],
+  NONE: ["TFSA", "FHSA", "RRSP"],
+};
+
+function reasonFor(category, account) {
+  switch (category) {
+    case "RRSP_EXEMPT":
+      if (account === "RRSP")
+        return "This is a US-domiciled holding, taxed directly by the US. The Canada-US tax treaty exempts US dividends from withholding tax specifically inside an RRSP — full amount, no leakage.";
+      if (account === "NONREG")
+        return "RRSP room is gone. In a non-registered account the 15% US withholding tax still applies, but you can claim it back as a foreign tax credit on your return — so it's recoverable, not lost.";
+      return "RRSP room is gone, and this is a US-domiciled holding — the 15% US withholding tax applies here and there's no mechanism to recover it inside a TFSA or FHSA. It's a quiet, permanent leak.";
+    case "ALWAYS_APPLIES":
+      if (account === "NONREG")
+        return "This fund wraps US equities at the Canadian-fund level, so the ~15% withholding is deducted before it ever reaches your account — RRSP included. Account choice doesn't change that here. In a non-registered account you can at least claim a foreign tax credit for it.";
+      return "This fund wraps US equities at the Canadian-fund level, so the ~15% withholding is deducted before it ever reaches your account — moving it to an RRSP wouldn't change that. Keeping it in a registered account still shelters the rest of the growth from Canadian tax, which is the main lever left.";
+    case "NONE":
+      if (account === "NONREG")
+        return "No US or foreign withholding tax applies to this holding either way. Outside a registered account you'll pay regular Canadian tax on dividends and capital gains, so this is the least efficient option here — only use it once FHSA, TFSA, and RRSP room are all gone.";
+      return "Pure Canadian equity exposure — no foreign withholding tax in any account. The choice here is about general tax shelter, not withholding: TFSA/FHSA gains are never taxed, RRSP gains are taxed later on withdrawal.";
+    default:
+      return "";
+  }
+}
+
+export function recommend(ticker, room) {
+  if (!ticker) return null;
+
+  if (ticker.whtCategory === "INTL_VARIES") {
+    return {
+      status: "unsupported",
+      message:
+        "This holds international (non-US) equities. Withholding rates vary by country and the RRSP shortcut that works for US assets doesn't generalize the same way — Domicile doesn't have confident rules for this yet. Treat any guess here as approximate, and check the fund's own tax documentation.",
+    };
+  }
+
+  if (ticker.whtCategory === "VERIFY") {
+    return {
+      status: "verify",
+      message:
+        ticker.structureNote ||
+        "This is a fund-of-funds or asset-allocation product. Its underlying structure can change over time and determines whether RRSP shelters any withholding tax — we don't guess on these. Check the provider's tax / fund facts page before assuming an RRSP advantage.",
+    };
+  }
+
+  const order = PRIORITY[ticker.whtCategory] || ["TFSA", "FHSA", "RRSP"];
+  const steps = [];
+
+  for (const account of order) {
+    const available = room?.[account] ?? 0;
+    steps.push({
+      account,
+      label: ACCOUNT_LABEL[account],
+      available,
+      reason: reasonFor(ticker.whtCategory, account),
+      blocked: available <= 0,
+    });
+  }
+
+  const winner = steps.find((s) => !s.blocked);
+
+  if (winner) {
+    return {
+      status: "assigned",
+      account: winner.account,
+      label: winner.label,
+      reason: winner.reason,
+      available: winner.available,
+      alternates: steps.filter((s) => s.account !== winner.account),
+    };
+  }
+
+  // All registered room is exhausted — fall back to non-registered.
+  return {
+    status: "fallback",
+    account: "NONREG",
+    label: ACCOUNT_LABEL.NONREG,
+    reason: reasonFor(ticker.whtCategory, "NONREG", ticker),
+    steps,
+  };
+}
