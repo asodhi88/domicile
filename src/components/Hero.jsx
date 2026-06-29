@@ -12,7 +12,7 @@ export default function Hero({ onSearch, loading }) {
   }
 
   return (
-    <section className="relative z-10 px-6 pb-4 pt-10 sm:pt-16">
+    <section className="relative z-10 px-6 pb-2 pt-10 sm:pt-16">
       <div className="mx-auto max-w-3xl text-center">
         <p className="font-mono text-[0.7rem] uppercase tracking-wider-2 text-brass-light/80">
           FHSA · TFSA · RRSP
@@ -41,13 +41,13 @@ export default function Hero({ onSearch, loading }) {
             disabled={loading}
             className="shrink-0 rounded-sm bg-brass px-5 py-3 font-mono text-xs uppercase tracking-wider-2 text-ink-900 transition hover:bg-brass-light disabled:opacity-50"
           >
-            {loading ? "Looking…" : "Find address"}
+            {loading ? "Looking…" : "Search"}
           </button>
         </form>
 
         <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
           <span className="font-mono text-[0.65rem] uppercase tracking-wider text-paper/30">
-            Try
+            Try tickers like
           </span>
           {EXAMPLES.map((sym) => (
             <button

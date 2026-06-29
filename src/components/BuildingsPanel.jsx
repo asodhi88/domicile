@@ -30,7 +30,7 @@ function money(n) {
 
 export default function BuildingsPanel({ rawAccounts, setRoom }) {
   return (
-    <section id="buildings" className="relative z-10 px-6 py-20">
+    <section id="buildings" className="relative z-10 px-6 pb-20 pt-10">
       <div className="mx-auto max-w-4xl">
         <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-paper/35">
           The accounts

@@ -70,7 +70,7 @@ export default function App() {
       <main>
         <Hero onSearch={handleSearch} loading={loading} />
 
-        <div className="min-h-[140px] px-6">
+        <div className="min-h-[60px] px-6">
           {needsManual && (
             <ManualClassify symbol={needsManual} onClassify={handleManualClassify} />
           )}
@@ -78,6 +78,8 @@ export default function App() {
             <AddressCard ticker={ticker} result={result} accounts={accounts} />
           )}
         </div>
+
+        <div className="mx-auto max-w-4xl border-t border-paper/10" />
 
         <BuildingsPanel rawAccounts={rawAccounts} setRoom={setRoom} />
       </main>
