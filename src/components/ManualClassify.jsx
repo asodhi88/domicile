@@ -1,6 +1,4 @@
 // src/components/ManualClassify.jsx
-import { useState } from "react";
-
 const OPTIONS = [
   {
     key: "CA_DIRECT",
@@ -29,7 +27,17 @@ const OPTIONS = [
 ];
 
 export default function ManualClassify({ symbol, onClassify }) {
-  const [selected, setSelected] = useState(null);
+  function selectOption(opt) {
+    onClassify({
+      symbol,
+      name: symbol,
+      whtCategory: opt.whtCategory,
+      structureNote:
+        opt.key === "INTL"
+          ? "Classified manually as international/uncertain — withholding rates vary by country and this is approximate."
+          : undefined,
+    });
+  }
 
   return (
     <div className="mx-auto mt-8 max-w-xl rounded-sm border border-paper/12 bg-ink-800 p-7">
@@ -48,37 +56,14 @@ export default function ManualClassify({ symbol, onClassify }) {
         {OPTIONS.map((opt) => (
           <button
             key={opt.key}
-            onClick={() => setSelected(opt.key)}
-            className={`block w-full rounded-sm border px-4 py-3 text-left transition ${
-              selected === opt.key
-                ? "border-brass-light bg-ink-700"
-                : "border-paper/10 hover:border-paper/25"
-            }`}
+            onClick={() => selectOption(opt)}
+            className="block w-full rounded-sm border border-paper/10 px-4 py-3 text-left transition hover:border-brass-light hover:bg-ink-700"
           >
             <span className="block text-sm font-medium text-paper/90">{opt.title}</span>
             <span className="block text-xs text-paper/45">{opt.hint}</span>
           </button>
         ))}
       </div>
-
-      <button
-        disabled={!selected}
-        onClick={() => {
-          const opt = OPTIONS.find((o) => o.key === selected);
-          onClassify({
-            symbol,
-            name: symbol,
-            whtCategory: opt.whtCategory,
-            structureNote:
-              opt.key === "INTL"
-                ? "Classified manually as international/uncertain — withholding rates vary by country and this is approximate."
-                : undefined,
-          });
-        }}
-        className="mt-5 w-full rounded-sm bg-brass py-2.5 font-mono text-xs uppercase tracking-wider-2 text-ink-900 transition hover:bg-brass-light disabled:cursor-not-allowed disabled:opacity-40"
-      >
-        Find its address
-      </button>
     </div>
   );
 }
