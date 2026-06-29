@@ -5,6 +5,7 @@ import Hero from "./components/Hero";
 import AddressCard from "./components/AddressCard";
 import ManualClassify from "./components/ManualClassify";
 import BuildingsPanel from "./components/BuildingsPanel";
+import SideOrnaments from "./components/SideOrnaments";
 import Footer from "./components/Footer";
 import { findTicker } from "./data/tickers";
 import { recommend } from "./data/rules";
@@ -64,6 +65,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-ink-900 bg-noise">
+      <SideOrnaments />
       <Header />
       <main>
         <Hero onSearch={handleSearch} loading={loading} />

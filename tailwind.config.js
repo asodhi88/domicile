@@ -43,6 +43,16 @@ export default {
         card: "0 1px 0 rgba(255,255,255,0.06) inset, 0 20px 40px -20px rgba(0,0,0,0.6)",
         stamp: "0 2px 0 rgba(0,0,0,0.08)",
       },
+      keyframes: {
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-16px)" },
+        },
+      },
+      animation: {
+        float: "float 7s ease-in-out infinite",
+        "float-slow": "float 9s ease-in-out infinite",
+      },
     },
   },
   plugins: [],
