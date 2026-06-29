@@ -13,7 +13,7 @@ export default function HowItWorks() {
           before they need to spill into a non-registered account.
         </h2>
 
-        <div className="mt-10 border-t border-paper/10 pt-8">
+        <div className="mt-10">
           <h3 className="font-display text-lg italic text-paper">
             The problem it solves
           </h3>
