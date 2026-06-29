@@ -33,10 +33,10 @@ export default function BuildingsPanel({ rawAccounts, setRoom }) {
     <section id="buildings" className="relative z-10 px-6 py-20">
       <div className="mx-auto max-w-4xl">
         <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-paper/35">
-          The buildings
+          The accounts
         </p>
         <h2 className="mt-2 font-display text-2xl italic text-paper sm:text-3xl">
-          How much room is left on each floor?
+          How much room is left in each account?
         </h2>
         <p className="mt-2 max-w-lg text-sm leading-relaxed text-paper/50">
           Enter what's actually left in each account right now — check your
