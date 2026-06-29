@@ -5,6 +5,7 @@ import Hero from "./components/Hero";
 import AddressCard from "./components/AddressCard";
 import ManualClassify from "./components/ManualClassify";
 import BuildingsPanel from "./components/BuildingsPanel";
+import HowItWorks from "./components/HowItWorks";
 import SideOrnaments from "./components/SideOrnaments";
 import Footer from "./components/Footer";
 import { findTicker } from "./data/tickers";
@@ -82,6 +83,8 @@ export default function App() {
         <div className="mx-auto max-w-4xl border-t border-paper/10" />
 
         <BuildingsPanel rawAccounts={rawAccounts} setRoom={setRoom} />
+
+        <HowItWorks />
       </main>
       <Footer />
     </div>

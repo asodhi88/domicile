@@ -22,13 +22,7 @@ export default function Hero({ onSearch, loading }) {
           <br />
           for every dollar.
         </h1>
-        <p className="mx-auto mt-5 max-w-md text-[1.02rem] leading-relaxed text-paper/55">
-          Every ETF and stock has a registered account where the tax treaty
-          treats it best. Search a ticker and Domicile tells you where to
-          park it — and whether you've got room.
-        </p>
-
-        <form onSubmit={submit} className="mx-auto mt-9 flex max-w-md gap-2">
+        <form onSubmit={submit} className="mx-auto mt-7 flex max-w-md gap-2">
           <input
             value={value}
             onChange={(e) => setValue(e.target.value)}
