@@ -58,7 +58,7 @@ export default function AddressCard({ ticker, result, accounts }) {
       )}
 
       <div className="rounded-sm border border-parchment-dark bg-parchment p-7 shadow-card sm:p-8">
-        <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/50">
+        <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/80">
           {ticker.symbol} · {ticker.name}
         </p>
 
