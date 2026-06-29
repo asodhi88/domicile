@@ -4,7 +4,7 @@
 
 Domicile tells Canadian self-directed investors which registered account (FHSA, TFSA, or RRSP) minimises tax drag for a given ETF or stock — and shows how much contribution room they have left before they need to spill into a non-registered account.
 
-**Live demo:** _https://domicile-8m2scoqag-coyote2.vercel.app/_
+**Live demo:** _https://domicile-mvp.vercel.app/
 
 ---
 
