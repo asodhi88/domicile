@@ -71,7 +71,7 @@ export default function App() {
       <main>
         <Hero onSearch={handleSearch} loading={loading} />
 
-        <div className="min-h-[60px] px-6">
+        <div className="min-h-[60px] px-6 pb-8">
           {needsManual && (
             <ManualClassify symbol={needsManual} onClassify={handleManualClassify} />
           )}

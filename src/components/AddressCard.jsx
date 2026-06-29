@@ -51,15 +51,11 @@ export default function AddressCard({ ticker, result, accounts }) {
   return (
     <div className="relative mx-auto mt-8 max-w-xl">
       {/* stamp */}
-      <div
-        className={`absolute -right-3 -top-4 z-10 rotate-6 rounded-sm border-2 px-3 py-1 font-mono text-[0.65rem] font-semibold uppercase tracking-wider-2 shadow-stamp ${
-          isFallback
-            ? "border-clay bg-clay-bg text-clay"
-            : "border-moss bg-moss-bg text-moss"
-        }`}
-      >
-        {isFallback ? "No vacancy upstairs" : "Address assigned"}
-      </div>
+      {!isFallback && (
+        <div className="absolute -right-3 -top-4 z-10 rotate-6 rounded-sm border-2 border-moss bg-moss-bg px-3 py-1 font-mono text-[0.65rem] font-semibold uppercase tracking-wider-2 text-moss shadow-stamp">
+          Recommended Account
+        </div>
+      )}
 
       <div className="rounded-sm border border-parchment-dark bg-parchment p-7 shadow-card sm:p-8">
         <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/50">
@@ -88,7 +84,7 @@ export default function AddressCard({ ticker, result, accounts }) {
         {isFallback && result.steps && (
           <div className="mt-6 border-t border-parchment-dark pt-5">
             <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/45">
-              Why not upstairs
+              Why Not Registered Accounts
             </p>
             <ul className="mt-2 space-y-1.5">
               {result.steps.map((s) => (
@@ -104,7 +100,7 @@ export default function AddressCard({ ticker, result, accounts }) {
         {!isFallback && result.alternates?.length > 0 && (
           <details className="mt-6 border-t border-parchment-dark pt-4 text-sm text-parchment-text/65">
             <summary className="cursor-pointer font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/45">
-              Other floors considered
+              Other Accounts Considered
             </summary>
             <ul className="mt-3 space-y-3">
               {result.alternates.map((alt) => (
