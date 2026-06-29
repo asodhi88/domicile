@@ -3,18 +3,21 @@ const BUILDINGS = [
   {
     key: "FHSA",
     name: "FHSA",
+    fullName: "First Home Savings Account",
     tagline: "The Starter",
     blurb: "$8,000/year, carries forward, $40,000 lifetime cap.",
   },
   {
     key: "TFSA",
     name: "TFSA",
+    fullName: "Tax-Free Savings Account",
     tagline: "The Forever Home",
     blurb: "Growth here is never taxed — withdrawals included.",
   },
   {
     key: "RRSP",
     name: "RRSP",
+    fullName: "Registered Retirement Savings Plan",
     tagline: "The Retirement Tower",
     blurb: "Tax-deferred, and the only floor with a US treaty exemption.",
   },
@@ -53,7 +56,10 @@ export default function BuildingsPanel({ rawAccounts, setRoom }) {
                 className="rounded-sm border border-paper/12 bg-ink-800 p-5"
               >
                 <div className="flex items-baseline justify-between">
-                  <span className="font-display text-lg italic text-paper">
+                  <span
+                    className="font-display text-lg italic text-paper"
+                    title={b.fullName}
+                  >
                     {b.name}
                   </span>
                   <span className="font-mono text-[0.6rem] uppercase tracking-wider text-paper/35">

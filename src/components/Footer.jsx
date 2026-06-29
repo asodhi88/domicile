@@ -1,4 +1,6 @@
 // src/components/Footer.jsx
+import FeedbackForm from "./FeedbackForm";
+
 export default function Footer() {
   return (
     <footer className="relative z-10 border-t border-paper/10 px-6 py-10">
@@ -17,6 +19,8 @@ export default function Footer() {
           Built by Aman · domicile is not affiliated with the CRA, Vanguard,
           BlackRock, or any fund provider mentioned.
         </p>
+
+        <FeedbackForm />
       </div>
     </footer>
   );
