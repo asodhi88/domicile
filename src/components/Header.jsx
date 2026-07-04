@@ -7,7 +7,7 @@ export default function Header() {
           <span className="font-display text-[2rem] italic tracking-tight text-paper">
             Domicile
           </span>
-            <span className="hidden font-mono text-[0.65rem] uppercase tracking-wider-2 text-paper/40 sm:inline">
+            <span className="hidden font-mono text-[0.65rem] uppercase tracking-wider-2 text-paper/60 sm:inline">
             Educational Account Locator
             </span>
         </div>

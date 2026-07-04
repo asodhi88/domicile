@@ -1,7 +1,8 @@
 // src/App.jsx
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
+import TickerSearch from "./components/TickerSearch";
 import AddressCard from "./components/AddressCard";
 import ManualClassify from "./components/ManualClassify";
 import BuildingsPanel from "./components/BuildingsPanel";
@@ -17,6 +18,19 @@ export default function App() {
   const [ticker, setTicker] = useState(null);
   const [result, setResult] = useState(null);
   const [needsManual, setNeedsManual] = useState(null); // symbol string or null
+
+  // Step 1 → Step 2 guidance: once all three accounts have a value, scroll
+  // the user down to the ticker search. Only fires on the transition so it
+  // doesn't hijack scrolling on every keystroke afterwards.
+  const allAccountsSet =
+    rawAccounts.FHSA !== null && rawAccounts.TFSA !== null && rawAccounts.RRSP !== null;
+  const wasAllSet = useRef(allAccountsSet);
+  useEffect(() => {
+    if (allAccountsSet && !wasAllSet.current) {
+      document.getElementById("search")?.scrollIntoView({ behavior: "smooth" });
+    }
+    wasAllSet.current = allAccountsSet;
+  }, [allAccountsSet]);
 
   async function handleSearch(rawSymbol) {
     const symbol = rawSymbol.trim().toUpperCase();
@@ -67,7 +81,13 @@ export default function App() {
     <div className="min-h-screen bg-ink-900 bg-noise">
       <Header />
       <main>
-        <Hero onSearch={handleSearch} loading={loading} />
+        <Hero />
+
+        <BuildingsPanel rawAccounts={rawAccounts} setRoom={setRoom} />
+
+        <div className="mx-auto max-w-4xl border-t border-paper/10" />
+
+        <TickerSearch onSearch={handleSearch} loading={loading} />
 
         <div className="min-h-[60px] px-6 pb-8">
           {needsManual && (
@@ -77,10 +97,6 @@ export default function App() {
             <AddressCard ticker={ticker} result={result} accounts={accounts} />
           )}
         </div>
-
-        <div className="mx-auto max-w-4xl border-t border-paper/10" />
-
-        <BuildingsPanel rawAccounts={rawAccounts} setRoom={setRoom} />
 
         <div className="mx-auto max-w-4xl border-t border-paper/10" />
 

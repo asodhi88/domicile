@@ -31,7 +31,7 @@ export default function AddressCard({ ticker, result, accounts }) {
       <div
         className={`relative mx-auto mt-8 max-w-xl rounded-sm border ${borderClass} bg-parchment p-7 shadow-card`}
       >
-        <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/50">
+        <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/70">
           {ticker.symbol} · {ticker.name}
         </p>
         <h3 className="mt-2 font-display text-xl italic text-parchment-text">
@@ -73,7 +73,7 @@ export default function AddressCard({ ticker, result, accounts }) {
 
         {accountKeyForRoom && (
           <div className="mt-6">
-            <div className="mb-1.5 flex items-baseline justify-between font-mono text-xs uppercase tracking-wider text-parchment-text/55">
+            <div className="mb-1.5 flex items-baseline justify-between font-mono text-xs uppercase tracking-wider text-parchment-text/70">
               <span>Room left in {result.label}</span>
               <span className="text-parchment-text/80">{money(total)}</span>
             </div>
@@ -83,7 +83,7 @@ export default function AddressCard({ ticker, result, accounts }) {
 
         {isFallback && result.steps && (
           <div className="mt-6 border-t border-parchment-dark pt-5">
-            <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/45">
+            <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/75">
               Why Not Registered Accounts
             </p>
             <ul className="mt-2 space-y-1.5">
@@ -98,8 +98,8 @@ export default function AddressCard({ ticker, result, accounts }) {
         )}
 
         {!isFallback && result.alternates?.length > 0 && (
-          <details className="mt-6 border-t border-parchment-dark pt-4 text-sm text-parchment-text/65">
-            <summary className="cursor-pointer font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/45">
+          <details className="mt-6 border-t border-parchment-dark pt-4 text-sm text-parchment-text/75">
+            <summary className="cursor-pointer font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/75">
               Other Accounts Considered
             </summary>
             <ul className="mt-3 space-y-3">
@@ -107,7 +107,7 @@ export default function AddressCard({ ticker, result, accounts }) {
                 <li key={alt.account}>
                   <span className="font-medium text-parchment-text/85">{alt.label}</span>
                   {alt.blocked ? " — no room" : ` — ${money(alt.available)} left`}
-                  <p className="mt-0.5 text-[0.85rem] leading-relaxed text-parchment-text/60">
+                  <p className="mt-0.5 text-[0.85rem] leading-relaxed text-parchment-text/75">
                     {alt.reason}
                   </p>
                 </li>

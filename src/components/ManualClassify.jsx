@@ -41,13 +41,13 @@ export default function ManualClassify({ symbol, onClassify }) {
 
   return (
     <div className="mx-auto mt-8 max-w-xl rounded-sm border border-paper/12 bg-ink-800 p-7">
-      <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-paper/40">
+      <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-paper/60">
         {symbol}
       </p>
       <h3 className="mt-2 font-display text-xl italic text-paper">
         Don't recognize this one — help me out
       </h3>
-      <p className="mt-2 text-sm leading-relaxed text-paper/55">
+      <p className="mt-2 text-sm leading-relaxed text-paper/70">
         Domicile doesn't have a confident classification for {symbol} yet.
         What does it mostly invest in?
       </p>
@@ -60,7 +60,7 @@ export default function ManualClassify({ symbol, onClassify }) {
             className="block w-full rounded-sm border border-paper/10 px-4 py-3 text-left transition hover:border-brass-light hover:bg-ink-700"
           >
             <span className="block text-sm font-medium text-paper/90">{opt.title}</span>
-            <span className="block text-xs text-paper/45">{opt.hint}</span>
+            <span className="block text-xs text-paper/65">{opt.hint}</span>
           </button>
         ))}
       </div>

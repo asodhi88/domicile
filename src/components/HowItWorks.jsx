@@ -3,7 +3,7 @@ export default function HowItWorks() {
   return (
     <section id="how-it-works" className="relative z-10 px-6 pb-20 pt-4">
       <div className="mx-auto max-w-4xl">
-        <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-paper/35">
+        <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-paper/70">
           How it works
         </p>
         <h2 className="mt-2 font-display text-2xl italic text-paper sm:text-3xl">
@@ -17,14 +17,14 @@ export default function HowItWorks() {
           <h3 className="font-display text-lg italic text-paper">
             The problem it solves
           </h3>
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-paper/55">
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-paper/70">
             Every ETF and stock has a registered account where the Canada–US
             tax treaty treats it best. Most self-directed investors don't
             know this until they've already lost money to it:
           </p>
 
           <ul className="mt-5 space-y-4">
-            <li className="text-sm leading-relaxed text-paper/55">
+            <li className="text-sm leading-relaxed text-paper/70">
               <span className="font-mono text-xs uppercase tracking-wider text-brass-light/80">
                 US-domiciled holdings (VOO, AAPL, etc.)
               </span>
@@ -33,7 +33,7 @@ export default function HowItWorks() {
               under the treaty. Inside a TFSA or FHSA it is quietly
               deducted, permanently.
             </li>
-            <li className="text-sm leading-relaxed text-paper/55">
+            <li className="text-sm leading-relaxed text-paper/70">
               <span className="font-mono text-xs uppercase tracking-wider text-brass-light/80">
                 Canadian-listed wrappers of US equities (VFV, VUN)
               </span>
@@ -42,7 +42,7 @@ export default function HowItWorks() {
               any account. No Canadian account type can shelter it, so
               account choice shifts to other priorities.
             </li>
-            <li className="text-sm leading-relaxed text-paper/55">
+            <li className="text-sm leading-relaxed text-paper/70">
               <span className="font-mono text-xs uppercase tracking-wider text-brass-light/80">
                 Pure Canadian equities
               </span>
@@ -53,7 +53,7 @@ export default function HowItWorks() {
             </li>
           </ul>
 
-          <p className="mt-6 max-w-2xl text-sm leading-relaxed text-paper/55">
+          <p className="mt-6 max-w-2xl text-sm leading-relaxed text-paper/70">
             Domicile also tracks contribution room manually — users update
             it themselves, and the tool tells them whether they have room in
             the recommended account before buying.
