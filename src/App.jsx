@@ -8,6 +8,7 @@ import ManualClassify from "./components/ManualClassify";
 import BuildingsPanel from "./components/BuildingsPanel";
 import HowItWorks from "./components/HowItWorks";
 import Footer from "./components/Footer";
+import BackToTop from "./components/BackToTop";
 import { findTicker } from "./data/tickers";
 import { recommend } from "./data/rules";
 import { useAccounts } from "./hooks/useAccounts";
@@ -103,6 +104,7 @@ export default function App() {
         <HowItWorks />
       </main>
       <Footer />
+      <BackToTop />
     </div>
   );
 }
