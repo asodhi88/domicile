@@ -1,4 +1,5 @@
 // src/components/AddressCard.jsx
+import { useState } from "react";
 
 function VacancyBar({ available, total }) {
   const pct = total > 0 ? Math.min(100, Math.round((available / total) * 100)) : 0;
@@ -20,7 +21,61 @@ function money(n) {
   }).format(n || 0);
 }
 
-export default function AddressCard({ ticker, result, accounts }) {
+function LogPurchase({ account, label, available, onLog }) {
+  const [amount, setAmount] = useState("");
+  const [confirmed, setConfirmed] = useState(false);
+
+  function submit(e) {
+    e.preventDefault();
+    const value = Number(amount);
+    if (!value || value <= 0) return;
+    onLog(account, value);
+    setConfirmed(true);
+    setAmount("");
+    setTimeout(() => setConfirmed(false), 2500);
+  }
+
+  return (
+    <form onSubmit={submit} className="mt-5 border-t border-parchment-dark pt-5">
+      <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/75">
+        Just bought this?
+      </p>
+      <div className="mt-2 flex items-center gap-2">
+        <div className="flex flex-1 items-center gap-1 rounded-sm border border-parchment-dark bg-paper px-3 py-2">
+          <span className="font-mono text-parchment-text/60">$</span>
+          <input
+            type="number"
+            min="0"
+            step="1"
+            inputMode="decimal"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            placeholder="Amount purchased"
+            className="w-full bg-transparent font-mono text-sm text-parchment-text outline-none placeholder:text-parchment-text/50"
+          />
+        </div>
+        <button
+          type="submit"
+          disabled={!amount || Number(amount) <= 0}
+          className="shrink-0 rounded-sm bg-brass px-4 py-2 font-mono text-xs uppercase tracking-wider-2 text-ink-900 transition hover:bg-brass-light disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          Log it
+        </button>
+      </div>
+      {confirmed ? (
+        <p className="mt-2 font-mono text-[0.7rem] text-moss">
+          ✓ Deducted from your {label} — {money(available)} left now
+        </p>
+      ) : (
+        <p className="mt-2 text-[0.75rem] text-parchment-text/65">
+          Deducts from your {label} room below, so your next search is accurate.
+        </p>
+      )}
+    </form>
+  );
+}
+
+export default function AddressCard({ ticker, result, accounts, onLogPurchase }) {
   if (!ticker || !result) return null;
 
   // --- Cases where we deliberately don't assign an address ---
@@ -79,6 +134,15 @@ export default function AddressCard({ ticker, result, accounts }) {
             </div>
             <VacancyBar available={total} total={Math.max(total, 1)} />
           </div>
+        )}
+
+        {accountKeyForRoom && onLogPurchase && (
+          <LogPurchase
+            account={accountKeyForRoom}
+            label={result.label}
+            available={total}
+            onLog={onLogPurchase}
+          />
         )}
 
         {isFallback && result.steps && (

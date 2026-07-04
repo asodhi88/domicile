@@ -14,7 +14,7 @@ import { recommend } from "./data/rules";
 import { useAccounts } from "./hooks/useAccounts";
 
 export default function App() {
-  const { accounts, rawAccounts, setRoom } = useAccounts();
+  const { accounts, rawAccounts, setRoom, logPurchase } = useAccounts();
   const [loading, setLoading] = useState(false);
   const [ticker, setTicker] = useState(null);
   const [result, setResult] = useState(null);
@@ -95,7 +95,20 @@ export default function App() {
             <ManualClassify symbol={needsManual} onClassify={handleManualClassify} />
           )}
           {!needsManual && ticker && result && (
-            <AddressCard ticker={ticker} result={result} accounts={accounts} />
+            <AddressCard
+              ticker={ticker}
+              result={result}
+              accounts={accounts}
+              onLogPurchase={(account, amount) => {
+                logPurchase(account, amount);
+                setResult(
+                  recommend(ticker, {
+                    ...accounts,
+                    [account]: Math.max(0, (accounts[account] ?? 0) - amount),
+                  })
+                );
+              }}
+            />
           )}
         </div>
 
