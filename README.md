@@ -4,7 +4,7 @@
 
 Domicile tells Canadian self-directed investors which registered account (FHSA, TFSA, or RRSP) minimises tax drag for a given ETF or stock — and shows how much contribution room they have left before they need to spill into a non-registered account.
 
-**Live demo:** _https://domicile-mvp.vercel.app/
+**Live demo:** [domicile-rust.vercel.app](https://domicile-rust.vercel.app)
 
 ---
 
@@ -31,6 +31,7 @@ Domicile also tracks contribution room manually — users update it themselves, 
 | Curated dataset | src/data/tickers.js | Hand-verified withholding classifications for ~40 common Canadian-held tickers |
 | Persistence | localStorage | Simple, no auth required for v1 |
 | PWA | vite-plugin-pwa | Installable, offline-capable, works as a home-screen app on mobile |
+| Email | Resend | Delivers user feedback emails to the owner via a serverless function |
 
 ---
 
@@ -44,9 +45,12 @@ cd domicile
 # 2. Install
 npm install
 
-# 3. Add your Twelve Data key (optional — manual classification works without it)
+# 3. Add your environment variables (copy the template first)
 cp .env.example .env.local
-# Edit .env.local and add: TWELVE_DATA_API_KEY=your_key_here
+# Then edit .env.local and fill in:
+# TWELVE_DATA_API_KEY=your_key_here       (from twelvedata.com, optional)
+# RESEND_API_KEY=re_your_key_here         (from resend.com, needed for feedback emails)
+# FEEDBACK_EMAIL=your@email.com           (where feedback submissions get sent to)
 
 # 4. Run
 npm run dev
@@ -60,8 +64,16 @@ The /api/lookup serverless function runs automatically via Vercel CLI locally. F
 
 1. Push this repo to GitHub.
 2. Go to vercel.com > Add New Project > import your repo.
-3. In Environment Variables, add: TWELVE_DATA_API_KEY = your key from twelvedata.com
+3. In Environment Variables, add all three:
+
+| Variable | Where to get it |
+|---|---|
+| `TWELVE_DATA_API_KEY` | Free key from [twelvedata.com](https://twelvedata.com) |
+| `RESEND_API_KEY` | Free key from [resend.com](https://resend.com) — needed for feedback emails |
+| `FEEDBACK_EMAIL` | The email address where feedback form submissions should be delivered |
+
 4. Click Deploy. Vercel auto-detects Vite + the /api folder.
+5. After deploy, go to Deployments > three-dot menu > Promote to Production to make it live on your main URL.
 
 No additional config needed — the vercel.json is intentionally omitted because Vercel zero-config detects this stack correctly.
 
