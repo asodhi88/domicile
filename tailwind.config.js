@@ -12,6 +12,7 @@ export default {
         },
         parchment: {
           DEFAULT: "#F1E7CF",
+          light: "#FAF4E4",
           dark: "#E4D4AC",
           text: "#3B2F1E",
         },

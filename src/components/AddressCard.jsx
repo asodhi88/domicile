@@ -37,12 +37,12 @@ function LogPurchase({ account, label, available, onLog }) {
 
   return (
     <form onSubmit={submit} className="mt-5 border-t border-parchment-dark pt-5">
-      <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/75">
+      <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/92">
         Just bought this?
       </p>
       <div className="mt-2 flex items-center gap-2">
         <div className="flex flex-1 items-center gap-1 rounded-sm border border-parchment-dark bg-paper px-3 py-2">
-          <span className="font-mono text-parchment-text/60">$</span>
+          <span className="font-mono text-parchment-text/82">$</span>
           <input
             type="number"
             min="0"
@@ -51,7 +51,7 @@ function LogPurchase({ account, label, available, onLog }) {
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             placeholder="Amount purchased"
-            className="w-full bg-transparent font-mono text-sm text-parchment-text outline-none placeholder:text-parchment-text/50"
+            className="w-full bg-transparent font-mono text-sm text-parchment-text outline-none placeholder:text-parchment-text/66"
           />
         </div>
         <button
@@ -67,7 +67,7 @@ function LogPurchase({ account, label, available, onLog }) {
           ✓ Deducted from your {label} — {money(available)} left now
         </p>
       ) : (
-        <p className="mt-2 text-[0.75rem] text-parchment-text/65">
+        <p className="mt-2 text-[0.75rem] text-parchment-text/88">
           Deducts from your {label} room below, so your next search is accurate.
         </p>
       )}
@@ -81,11 +81,11 @@ function TaxDragCallout({ ticker, accountKey, onEstimate }) {
 
   return (
     <div className="mt-6 border-t border-parchment-dark pt-5">
-      <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/75">
+      <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/92">
         See the actual dollar cost
       </p>
       <div className="mt-2 flex items-center gap-1 rounded-sm border border-parchment-dark bg-paper px-3 py-2">
-        <span className="font-mono text-parchment-text/60">$</span>
+        <span className="font-mono text-parchment-text/82">$</span>
         <input
           type="number"
           min="0"
@@ -94,12 +94,12 @@ function TaxDragCallout({ ticker, accountKey, onEstimate }) {
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
           placeholder="How much are you investing in this?"
-          className="w-full bg-transparent font-mono text-sm text-parchment-text outline-none placeholder:text-parchment-text/50"
+          className="w-full bg-transparent font-mono text-sm text-parchment-text outline-none placeholder:text-parchment-text/66"
         />
       </div>
 
       {drag && drag.status === "unavailable" && (
-        <p className="mt-3 text-[0.85rem] leading-relaxed text-parchment-text/65">
+        <p className="mt-3 text-[0.85rem] leading-relaxed text-parchment-text/88">
           Domicile doesn't have a confident dividend yield for {ticker.symbol} yet,
           so it can't turn this into a dollar figure. The account recommendation
           above still holds.
@@ -108,7 +108,7 @@ function TaxDragCallout({ ticker, accountKey, onEstimate }) {
 
       {drag && drag.status === "sheltered" && (
         <p className="mt-3 font-mono text-2xl text-moss">
-          $0<span className="ml-2 font-body text-sm font-normal text-parchment-text/70">/year withholding tax leak — fully sheltered here.</span>
+          $0<span className="ml-2 font-body text-sm font-normal text-parchment-text/90">/year withholding tax leak — fully sheltered here.</span>
         </p>
       )}
 
@@ -116,9 +116,9 @@ function TaxDragCallout({ ticker, accountKey, onEstimate }) {
         <div className="mt-3">
           <p className="font-mono text-2xl text-clay">
             {money(drag.amount)}
-            <span className="ml-2 font-body text-sm font-normal text-parchment-text/70">/year, gone for good.</span>
+            <span className="ml-2 font-body text-sm font-normal text-parchment-text/90">/year, gone for good.</span>
           </p>
-          <p className="mt-1.5 text-[0.85rem] leading-relaxed text-parchment-text/65">
+          <p className="mt-1.5 text-[0.85rem] leading-relaxed text-parchment-text/88">
             Based on {ticker.symbol}'s approximate yield, this account has no way
             to recover US withholding tax — unlike an RRSP or a non-registered
             account.
@@ -130,9 +130,9 @@ function TaxDragCallout({ ticker, accountKey, onEstimate }) {
         <div className="mt-3">
           <p className="font-mono text-2xl text-brass">
             {money(drag.amount)}
-            <span className="ml-2 font-body text-sm font-normal text-parchment-text/70">/year withheld, but recoverable.</span>
+            <span className="ml-2 font-body text-sm font-normal text-parchment-text/90">/year withheld, but recoverable.</span>
           </p>
-          <p className="mt-1.5 text-[0.85rem] leading-relaxed text-parchment-text/65">
+          <p className="mt-1.5 text-[0.85rem] leading-relaxed text-parchment-text/88">
             You can claim this back as a foreign tax credit on your return —
             it's a cash-flow timing cost, not a permanent loss.
           </p>
@@ -143,9 +143,9 @@ function TaxDragCallout({ ticker, accountKey, onEstimate }) {
         <div className="mt-3">
           <p className="font-mono text-2xl text-clay">
             {money(drag.amount)}
-            <span className="ml-2 font-body text-sm font-normal text-parchment-text/70">/year, baked into the fund — no account avoids it.</span>
+            <span className="ml-2 font-body text-sm font-normal text-parchment-text/90">/year, baked into the fund — no account avoids it.</span>
           </p>
-          <p className="mt-1.5 text-[0.85rem] leading-relaxed text-parchment-text/65">
+          <p className="mt-1.5 text-[0.85rem] leading-relaxed text-parchment-text/88">
             This is deducted at the fund level before it reaches any account,
             RRSP included. Account choice doesn't change this number.
           </p>
@@ -156,12 +156,12 @@ function TaxDragCallout({ ticker, accountKey, onEstimate }) {
         <div className="mt-3">
           <p className="font-mono text-2xl text-brass">
             {money(drag.amount)}
-            <span className="ml-2 font-body text-sm font-normal text-parchment-text/70">/year withheld at the fund level, recoverable via foreign tax credit.</span>
+            <span className="ml-2 font-body text-sm font-normal text-parchment-text/90">/year withheld at the fund level, recoverable via foreign tax credit.</span>
           </p>
         </div>
       )}
 
-      <p className="mt-3 text-[0.7rem] text-parchment-text/45">
+      <p className="mt-3 text-[0.7rem] text-parchment-text/72">
         Estimate only — based on an approximate, hand-set dividend yield, not
         live market data. Actual yield moves with price and payout changes.
       </p>
@@ -178,15 +178,15 @@ export default function AddressCard({ ticker, result, accounts, onLogPurchase, o
       result.status === "verify" ? "border-brass/40" : "border-clay/40";
     return (
       <div
-        className={`relative mx-auto mt-8 max-w-xl rounded-sm border ${borderClass} bg-parchment p-7 shadow-card`}
+        className={`relative mx-auto mt-8 max-w-xl rounded-sm border ${borderClass} bg-parchment-light p-7 shadow-card`}
       >
-        <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/70">
+        <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/90">
           {ticker.symbol} · {ticker.name}
         </p>
         <h3 className="mt-2 font-display text-xl italic text-parchment-text">
           {result.status === "verify" ? "Address unclear — check before assuming" : "Not fully supported yet"}
         </h3>
-        <p className="mt-3 text-[0.95rem] leading-relaxed text-parchment-text/80">
+        <p className="mt-3 text-[0.95rem] leading-relaxed text-parchment-text/95">
           {result.message}
         </p>
       </div>
@@ -206,8 +206,8 @@ export default function AddressCard({ ticker, result, accounts, onLogPurchase, o
         </div>
       )}
 
-      <div className="rounded-sm border border-parchment-dark bg-parchment p-7 shadow-card sm:p-8">
-        <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/80">
+      <div className="rounded-sm border border-parchment-dark bg-parchment-light p-7 shadow-card sm:p-8">
+        <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/95">
           {ticker.symbol} · {ticker.name}
         </p>
 
@@ -216,15 +216,15 @@ export default function AddressCard({ ticker, result, accounts, onLogPurchase, o
           <span className="not-italic text-brass">{result.label}</span>
         </h3>
 
-        <p className="mt-4 text-[0.97rem] leading-relaxed text-parchment-text/85">
+        <p className="mt-4 text-[0.97rem] leading-relaxed text-parchment-text/95">
           {result.reason}
         </p>
 
         {accountKeyForRoom && (
           <div className="mt-6">
-            <div className="mb-1.5 flex items-baseline justify-between font-mono text-xs uppercase tracking-wider text-parchment-text/70">
+            <div className="mb-1.5 flex items-baseline justify-between font-mono text-xs uppercase tracking-wider text-parchment-text/90">
               <span>Room left in {result.label}</span>
-              <span className="text-parchment-text/80">{money(total)}</span>
+              <span className="text-parchment-text/95">{money(total)}</span>
             </div>
             <VacancyBar available={total} total={Math.max(total, 1)} />
           </div>
@@ -249,13 +249,13 @@ export default function AddressCard({ ticker, result, accounts, onLogPurchase, o
 
         {isFallback && result.steps && (
           <div className="mt-6 border-t border-parchment-dark pt-5">
-            <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/75">
+            <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/92">
               Why Not Registered Accounts
             </p>
             <ul className="mt-2 space-y-1.5">
               {result.steps.map((s) => (
-                <li key={s.account} className="text-sm text-parchment-text/70">
-                  <span className="font-medium text-parchment-text/85">{s.label}:</span>{" "}
+                <li key={s.account} className="text-sm text-parchment-text/90">
+                  <span className="font-medium text-parchment-text/95">{s.label}:</span>{" "}
                   {money(s.available)} left{s.available <= 0 ? " — no room" : ""}
                 </li>
               ))}
@@ -264,16 +264,16 @@ export default function AddressCard({ ticker, result, accounts, onLogPurchase, o
         )}
 
         {!isFallback && result.alternates?.length > 0 && (
-          <details className="mt-6 border-t border-parchment-dark pt-4 text-sm text-parchment-text/75">
-            <summary className="cursor-pointer font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/75">
+          <details className="mt-6 border-t border-parchment-dark pt-4 text-sm text-parchment-text/92">
+            <summary className="cursor-pointer font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/92">
               Other Accounts Considered
             </summary>
             <ul className="mt-3 space-y-3">
               {result.alternates.map((alt) => (
                 <li key={alt.account}>
-                  <span className="font-medium text-parchment-text/85">{alt.label}</span>
+                  <span className="font-medium text-parchment-text/95">{alt.label}</span>
                   {alt.blocked ? " — no room" : ` — ${money(alt.available)} left`}
-                  <p className="mt-0.5 text-[0.85rem] leading-relaxed text-parchment-text/75">
+                  <p className="mt-0.5 text-[0.85rem] leading-relaxed text-parchment-text/92">
                     {alt.reason}
                   </p>
                 </li>
