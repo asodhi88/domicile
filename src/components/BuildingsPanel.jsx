@@ -35,10 +35,7 @@ export default function BuildingsPanel({ rawAccounts, setRoom }) {
   return (
     <section className="relative z-10 px-6 pb-20 pt-10">
       <div className="mx-auto max-w-4xl">
-        <p
-          id="step1-kicker"
-          className="font-mono text-[0.7rem] uppercase tracking-wider-2 text-brass-light"
-        >
+        <p className="font-mono text-[0.7rem] uppercase tracking-wider-2 text-brass-light">
           Step 1 · Update your accounts
         </p>
         <h2 className="mt-2 font-display text-2xl italic text-paper sm:text-3xl">

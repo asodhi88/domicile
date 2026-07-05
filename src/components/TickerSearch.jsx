@@ -30,10 +30,7 @@ export default function TickerSearch({ onSearch, loading }) {
   return (
     <section id="search" className="relative z-10 px-6 pb-2 pt-10">
       <div className="mx-auto max-w-4xl">
-        <p
-          id="step2-kicker"
-          className="font-mono text-[0.7rem] uppercase tracking-wider-2 text-brass-light"
-        >
+        <p className="font-mono text-[0.7rem] uppercase tracking-wider-2 text-brass-light">
           Step 2 · Enter a ticker
         </p>
         <h2 className="mt-2 font-display text-2xl italic text-paper sm:text-3xl">

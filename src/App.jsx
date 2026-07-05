@@ -1,8 +1,6 @@
 // src/App.jsx
 import { useEffect, useRef, useState } from "react";
 import Header from "./components/Header";
-import Hero from "./components/Hero";
-import FlowLine from "./components/FlowLine";
 import TickerSearch from "./components/TickerSearch";
 import AddressCard from "./components/AddressCard";
 import ManualClassify from "./components/ManualClassify";
@@ -83,10 +81,6 @@ export default function App() {
     <div className="min-h-screen bg-ink-900 bg-noise">
       <Header />
       <main className="relative">
-        <FlowLine />
-
-        <Hero />
-
         <BuildingsPanel rawAccounts={rawAccounts} setRoom={setRoom} />
 
         <div className="mx-auto max-w-4xl border-t border-paper/10" />

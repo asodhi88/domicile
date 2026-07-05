@@ -1,5 +1,5 @@
 // src/components/FeedbackForm.jsx
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const MAX_FEEDBACK_LENGTH = 500;
 
@@ -8,6 +8,14 @@ export default function FeedbackForm() {
   const [name, setName] = useState("");
   const [feedback, setFeedback] = useState("");
   const [status, setStatus] = useState("idle"); // idle | sending | done | error
+  const boxRef = useRef(null);
+
+  // When the box opens, scroll it fully into view.
+  useEffect(() => {
+    if (open) {
+      boxRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [open]);
 
   async function submit(e) {
     e.preventDefault();
@@ -45,7 +53,10 @@ export default function FeedbackForm() {
       )}
 
       {open && (
-        <div className="max-w-md rounded-sm border border-parchment-dark bg-parchment p-6 shadow-card">
+        <div
+          ref={boxRef}
+          className="max-w-md scroll-mt-24 rounded-sm border border-parchment-dark bg-parchment-light p-6 shadow-card"
+        >
           {status === "done" ? (
             <>
               <p className="font-display text-lg italic text-parchment-text">
@@ -60,12 +71,12 @@ export default function FeedbackForm() {
             </>
           ) : (
             <form onSubmit={submit}>
-              <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/70">
+              <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/90">
                 Provide feedback
               </p>
 
               <label className="mt-4 block">
-                <span className="font-mono text-[0.65rem] uppercase tracking-wider text-parchment-text/75">
+                <span className="font-mono text-[0.65rem] uppercase tracking-wider text-parchment-text/90">
                   Name
                 </span>
                 <input
@@ -78,7 +89,7 @@ export default function FeedbackForm() {
               </label>
 
               <label className="mt-4 block">
-                <span className="font-mono text-[0.65rem] uppercase tracking-wider text-parchment-text/75">
+                <span className="font-mono text-[0.65rem] uppercase tracking-wider text-parchment-text/90">
                   Feedback
                 </span>
                 <textarea
@@ -91,7 +102,7 @@ export default function FeedbackForm() {
                   placeholder="What's working, what's missing, what's confusing?"
                   className="mt-1 w-full resize-none rounded-sm border border-parchment-dark bg-paper px-3 py-2 text-sm text-parchment-text outline-none focus:border-brass"
                 />
-                <span className="mt-1 block text-right font-mono text-[0.65rem] text-parchment-text/60">
+                <span className="mt-1 block text-right font-mono text-[0.65rem] text-parchment-text/80">
                   {feedback.length}/{MAX_FEEDBACK_LENGTH}
                 </span>
               </label>
@@ -113,7 +124,7 @@ export default function FeedbackForm() {
                 <button
                   type="button"
                   onClick={reset}
-                  className="rounded-sm px-4 py-2 font-mono text-xs uppercase tracking-wider-2 text-parchment-text/70 transition hover:text-parchment-text"
+                  className="rounded-sm px-4 py-2 font-mono text-xs uppercase tracking-wider-2 text-parchment-text/90 transition hover:text-parchment-text"
                 >
                   Cancel
                 </button>
