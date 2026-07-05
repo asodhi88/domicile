@@ -27,6 +27,12 @@
 // This list is intentionally short. It is a starting point, not a market
 // database — extend it as you go, and when you're not sure, lean on "VERIFY"
 // rather than guessing. Getting this wrong costs real money.
+//
+// yieldPct — approximate trailing dividend yield (%), hand-set and static.
+// Only present on RRSP_EXEMPT / ALWAYS_APPLIES tickers, since it's only used
+// to estimate withholding tax drag in dollars. This is NOT live data — real
+// yields move with price and payout changes. Treat it as illustrative, and
+// refresh these numbers periodically rather than trusting them indefinitely.
 
 export const TICKERS = [
   // ---- Canadian equities — no foreign withholding tax anywhere ----
@@ -51,40 +57,40 @@ export const TICKERS = [
   { symbol: "ZRE", name: "BMO Equal Weight REITs Index ETF", exchange: "TSX", assetClass: "equity-etf", region: "CA", whtCategory: "NONE" },
 
   // ---- US-domiciled, holds US equities directly — RRSP shelters the WHT ----
-  { symbol: "VOO", name: "Vanguard S&P 500 ETF", exchange: "NYSE Arca", assetClass: "equity-etf", region: "US", whtCategory: "RRSP_EXEMPT" },
-  { symbol: "VTI", name: "Vanguard Total Stock Market ETF", exchange: "NYSE Arca", assetClass: "equity-etf", region: "US", whtCategory: "RRSP_EXEMPT" },
-  { symbol: "SPY", name: "SPDR S&P 500 ETF Trust", exchange: "NYSE Arca", assetClass: "equity-etf", region: "US", whtCategory: "RRSP_EXEMPT" },
-  { symbol: "QQQ", name: "Invesco QQQ Trust", exchange: "NASDAQ", assetClass: "equity-etf", region: "US", whtCategory: "RRSP_EXEMPT" },
-  { symbol: "SCHD", name: "Schwab U.S. Dividend Equity ETF", exchange: "NYSE Arca", assetClass: "equity-etf", region: "US", whtCategory: "RRSP_EXEMPT" },
-  { symbol: "AAPL", name: "Apple Inc.", exchange: "NASDAQ", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT" },
-  { symbol: "MSFT", name: "Microsoft Corporation", exchange: "NASDAQ", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT" },
-  { symbol: "GOOGL", name: "Alphabet Inc. Class A", exchange: "NASDAQ", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT" },
-  { symbol: "AMZN", name: "Amazon.com Inc.", exchange: "NASDAQ", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT" },
-  { symbol: "NVDA", name: "NVIDIA Corporation", exchange: "NASDAQ", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT" },
-  { symbol: "META", name: "Meta Platforms Inc.", exchange: "NASDAQ", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT" },
-  { symbol: "JPM", name: "JPMorgan Chase & Co.", exchange: "NYSE", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT" },
-  { symbol: "JNJ", name: "Johnson & Johnson", exchange: "NYSE", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT" },
-  { symbol: "KO", name: "Coca-Cola Co.", exchange: "NYSE", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT" },
-  { symbol: "PG", name: "Procter & Gamble Co.", exchange: "NYSE", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT" },
-  { symbol: "TSLA", name: "Tesla Inc.", exchange: "NASDAQ", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT" },
-  { symbol: "BRK.B", name: "Berkshire Hathaway Inc. Class B", exchange: "NYSE", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT" },
-  { symbol: "V", name: "Visa Inc.", exchange: "NYSE", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT" },
-  { symbol: "MA", name: "Mastercard Inc.", exchange: "NYSE", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT" },
-  { symbol: "DIS", name: "The Walt Disney Company", exchange: "NYSE", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT" },
-  { symbol: "NFLX", name: "Netflix Inc.", exchange: "NASDAQ", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT" },
-  { symbol: "AMD", name: "Advanced Micro Devices Inc.", exchange: "NASDAQ", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT" },
-  { symbol: "XOM", name: "Exxon Mobil Corporation", exchange: "NYSE", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT" },
-  { symbol: "PEP", name: "PepsiCo Inc.", exchange: "NASDAQ", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT" },
-  { symbol: "COST", name: "Costco Wholesale Corporation", exchange: "NASDAQ", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT" },
-  { symbol: "HD", name: "The Home Depot Inc.", exchange: "NYSE", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT" },
-  { symbol: "IVV", name: "iShares Core S&P 500 ETF", exchange: "NYSE Arca", assetClass: "equity-etf", region: "US", whtCategory: "RRSP_EXEMPT" },
-  { symbol: "QQQM", name: "Invesco NASDAQ 100 ETF", exchange: "NASDAQ", assetClass: "equity-etf", region: "US", whtCategory: "RRSP_EXEMPT" },
-  { symbol: "VYM", name: "Vanguard High Dividend Yield ETF", exchange: "NYSE Arca", assetClass: "equity-etf", region: "US", whtCategory: "RRSP_EXEMPT" },
-  { symbol: "JEPI", name: "JPMorgan Equity Premium Income ETF", exchange: "NYSE Arca", assetClass: "equity-etf", region: "US", whtCategory: "RRSP_EXEMPT" },
+  { symbol: "VOO", name: "Vanguard S&P 500 ETF", exchange: "NYSE Arca", assetClass: "equity-etf", region: "US", whtCategory: "RRSP_EXEMPT", yieldPct: 1.3 },
+  { symbol: "VTI", name: "Vanguard Total Stock Market ETF", exchange: "NYSE Arca", assetClass: "equity-etf", region: "US", whtCategory: "RRSP_EXEMPT", yieldPct: 1.3 },
+  { symbol: "SPY", name: "SPDR S&P 500 ETF Trust", exchange: "NYSE Arca", assetClass: "equity-etf", region: "US", whtCategory: "RRSP_EXEMPT", yieldPct: 1.3 },
+  { symbol: "QQQ", name: "Invesco QQQ Trust", exchange: "NASDAQ", assetClass: "equity-etf", region: "US", whtCategory: "RRSP_EXEMPT", yieldPct: 0.6 },
+  { symbol: "SCHD", name: "Schwab U.S. Dividend Equity ETF", exchange: "NYSE Arca", assetClass: "equity-etf", region: "US", whtCategory: "RRSP_EXEMPT", yieldPct: 3.5 },
+  { symbol: "AAPL", name: "Apple Inc.", exchange: "NASDAQ", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT", yieldPct: 0.5 },
+  { symbol: "MSFT", name: "Microsoft Corporation", exchange: "NASDAQ", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT", yieldPct: 0.7 },
+  { symbol: "GOOGL", name: "Alphabet Inc. Class A", exchange: "NASDAQ", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT", yieldPct: 0.4 },
+  { symbol: "AMZN", name: "Amazon.com Inc.", exchange: "NASDAQ", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT", yieldPct: 0 },
+  { symbol: "NVDA", name: "NVIDIA Corporation", exchange: "NASDAQ", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT", yieldPct: 0.03 },
+  { symbol: "META", name: "Meta Platforms Inc.", exchange: "NASDAQ", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT", yieldPct: 0.3 },
+  { symbol: "JPM", name: "JPMorgan Chase & Co.", exchange: "NYSE", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT", yieldPct: 2.2 },
+  { symbol: "JNJ", name: "Johnson & Johnson", exchange: "NYSE", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT", yieldPct: 3.0 },
+  { symbol: "KO", name: "Coca-Cola Co.", exchange: "NYSE", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT", yieldPct: 3.0 },
+  { symbol: "PG", name: "Procter & Gamble Co.", exchange: "NYSE", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT", yieldPct: 2.4 },
+  { symbol: "TSLA", name: "Tesla Inc.", exchange: "NASDAQ", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT", yieldPct: 0 },
+  { symbol: "BRK.B", name: "Berkshire Hathaway Inc. Class B", exchange: "NYSE", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT", yieldPct: 0 },
+  { symbol: "V", name: "Visa Inc.", exchange: "NYSE", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT", yieldPct: 0.7 },
+  { symbol: "MA", name: "Mastercard Inc.", exchange: "NYSE", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT", yieldPct: 0.5 },
+  { symbol: "DIS", name: "The Walt Disney Company", exchange: "NYSE", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT", yieldPct: 0.9 },
+  { symbol: "NFLX", name: "Netflix Inc.", exchange: "NASDAQ", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT", yieldPct: 0 },
+  { symbol: "AMD", name: "Advanced Micro Devices Inc.", exchange: "NASDAQ", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT", yieldPct: 0 },
+  { symbol: "XOM", name: "Exxon Mobil Corporation", exchange: "NYSE", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT", yieldPct: 3.3 },
+  { symbol: "PEP", name: "PepsiCo Inc.", exchange: "NASDAQ", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT", yieldPct: 3.0 },
+  { symbol: "COST", name: "Costco Wholesale Corporation", exchange: "NASDAQ", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT", yieldPct: 0.5 },
+  { symbol: "HD", name: "The Home Depot Inc.", exchange: "NYSE", assetClass: "stock", region: "US", whtCategory: "RRSP_EXEMPT", yieldPct: 2.2 },
+  { symbol: "IVV", name: "iShares Core S&P 500 ETF", exchange: "NYSE Arca", assetClass: "equity-etf", region: "US", whtCategory: "RRSP_EXEMPT", yieldPct: 1.3 },
+  { symbol: "QQQM", name: "Invesco NASDAQ 100 ETF", exchange: "NASDAQ", assetClass: "equity-etf", region: "US", whtCategory: "RRSP_EXEMPT", yieldPct: 0.6 },
+  { symbol: "VYM", name: "Vanguard High Dividend Yield ETF", exchange: "NYSE Arca", assetClass: "equity-etf", region: "US", whtCategory: "RRSP_EXEMPT", yieldPct: 2.8 },
+  { symbol: "JEPI", name: "JPMorgan Equity Premium Income ETF", exchange: "NYSE Arca", assetClass: "equity-etf", region: "US", whtCategory: "RRSP_EXEMPT", yieldPct: 7.5 },
 
   // ---- Canadian-listed wrappers of US equities — WHT baked in everywhere ----
-  { symbol: "VFV", name: "Vanguard S&P 500 Index ETF (CAD)", exchange: "TSX", assetClass: "equity-etf", region: "US", whtCategory: "ALWAYS_APPLIES", structureNote: "Canadian-listed, holds the US-listed VOO underneath. Withholding is assessed at the fund level before it reaches any account." },
-  { symbol: "VUN", name: "Vanguard U.S. Total Market Index ETF (CAD)", exchange: "TSX", assetClass: "equity-etf", region: "US", whtCategory: "ALWAYS_APPLIES", structureNote: "Canadian-listed, wraps the US-listed VTI. Same fund-level withholding applies in every account." },
+  { symbol: "VFV", name: "Vanguard S&P 500 Index ETF (CAD)", exchange: "TSX", assetClass: "equity-etf", region: "US", whtCategory: "ALWAYS_APPLIES", yieldPct: 1.2, structureNote: "Canadian-listed, holds the US-listed VOO underneath. Withholding is assessed at the fund level before it reaches any account." },
+  { symbol: "VUN", name: "Vanguard U.S. Total Market Index ETF (CAD)", exchange: "TSX", assetClass: "equity-etf", region: "US", whtCategory: "ALWAYS_APPLIES", yieldPct: 1.2, structureNote: "Canadian-listed, wraps the US-listed VTI. Same fund-level withholding applies in every account." },
 
   // ---- Fund-of-funds / asset allocation — structure can shift, don't guess ----
   { symbol: "XEQT", name: "iShares Core Equity ETF Portfolio", exchange: "TSX", assetClass: "mixed-etf", region: "MIXED", whtCategory: "VERIFY" },

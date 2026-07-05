@@ -75,7 +75,101 @@ function LogPurchase({ account, label, available, onLog }) {
   );
 }
 
-export default function AddressCard({ ticker, result, accounts, onLogPurchase }) {
+function TaxDragCallout({ ticker, accountKey, onEstimate }) {
+  const [amount, setAmount] = useState("");
+  const drag = amount && Number(amount) > 0 ? onEstimate(ticker, accountKey, Number(amount)) : null;
+
+  return (
+    <div className="mt-6 border-t border-parchment-dark pt-5">
+      <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/75">
+        See the actual dollar cost
+      </p>
+      <div className="mt-2 flex items-center gap-1 rounded-sm border border-parchment-dark bg-paper px-3 py-2">
+        <span className="font-mono text-parchment-text/60">$</span>
+        <input
+          type="number"
+          min="0"
+          step="1"
+          inputMode="decimal"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          placeholder="How much are you investing in this?"
+          className="w-full bg-transparent font-mono text-sm text-parchment-text outline-none placeholder:text-parchment-text/50"
+        />
+      </div>
+
+      {drag && drag.status === "unavailable" && (
+        <p className="mt-3 text-[0.85rem] leading-relaxed text-parchment-text/65">
+          Domicile doesn't have a confident dividend yield for {ticker.symbol} yet,
+          so it can't turn this into a dollar figure. The account recommendation
+          above still holds.
+        </p>
+      )}
+
+      {drag && drag.status === "sheltered" && (
+        <p className="mt-3 font-mono text-2xl text-moss">
+          $0<span className="ml-2 font-body text-sm font-normal text-parchment-text/70">/year withholding tax leak — fully sheltered here.</span>
+        </p>
+      )}
+
+      {drag && drag.status === "permanent" && (
+        <div className="mt-3">
+          <p className="font-mono text-2xl text-clay">
+            {money(drag.amount)}
+            <span className="ml-2 font-body text-sm font-normal text-parchment-text/70">/year, gone for good.</span>
+          </p>
+          <p className="mt-1.5 text-[0.85rem] leading-relaxed text-parchment-text/65">
+            Based on {ticker.symbol}'s approximate yield, this account has no way
+            to recover US withholding tax — unlike an RRSP or a non-registered
+            account.
+          </p>
+        </div>
+      )}
+
+      {drag && drag.status === "recoverable" && (
+        <div className="mt-3">
+          <p className="font-mono text-2xl text-brass">
+            {money(drag.amount)}
+            <span className="ml-2 font-body text-sm font-normal text-parchment-text/70">/year withheld, but recoverable.</span>
+          </p>
+          <p className="mt-1.5 text-[0.85rem] leading-relaxed text-parchment-text/65">
+            You can claim this back as a foreign tax credit on your return —
+            it's a cash-flow timing cost, not a permanent loss.
+          </p>
+        </div>
+      )}
+
+      {drag && drag.status === "unavoidable" && (
+        <div className="mt-3">
+          <p className="font-mono text-2xl text-clay">
+            {money(drag.amount)}
+            <span className="ml-2 font-body text-sm font-normal text-parchment-text/70">/year, baked into the fund — no account avoids it.</span>
+          </p>
+          <p className="mt-1.5 text-[0.85rem] leading-relaxed text-parchment-text/65">
+            This is deducted at the fund level before it reaches any account,
+            RRSP included. Account choice doesn't change this number.
+          </p>
+        </div>
+      )}
+
+      {drag && drag.status === "unavoidable_recoverable" && (
+        <div className="mt-3">
+          <p className="font-mono text-2xl text-brass">
+            {money(drag.amount)}
+            <span className="ml-2 font-body text-sm font-normal text-parchment-text/70">/year withheld at the fund level, recoverable via foreign tax credit.</span>
+          </p>
+        </div>
+      )}
+
+      <p className="mt-3 text-[0.7rem] text-parchment-text/45">
+        Estimate only — based on an approximate, hand-set dividend yield, not
+        live market data. Actual yield moves with price and payout changes.
+      </p>
+    </div>
+  );
+}
+
+export default function AddressCard({ ticker, result, accounts, onLogPurchase, onEstimateTaxDrag }) {
   if (!ticker || !result) return null;
 
   // --- Cases where we deliberately don't assign an address ---
@@ -142,6 +236,14 @@ export default function AddressCard({ ticker, result, accounts, onLogPurchase })
             label={result.label}
             available={total}
             onLog={onLogPurchase}
+          />
+        )}
+
+        {["RRSP_EXEMPT", "ALWAYS_APPLIES"].includes(ticker.whtCategory) && onEstimateTaxDrag && (
+          <TaxDragCallout
+            ticker={ticker}
+            accountKey={result.account}
+            onEstimate={onEstimateTaxDrag}
           />
         )}
 

@@ -98,3 +98,45 @@ export function recommend(ticker, room) {
     steps,
   };
 }
+
+// ---------------------------------------------------------------------------
+// Tax drag dollar estimate
+// ---------------------------------------------------------------------------
+// Turns "this leaks withholding tax" into a concrete annual dollar figure,
+// given how much someone is planning to invest. Only meaningful where
+// withholding tax can actually apply (RRSP_EXEMPT / ALWAYS_APPLIES) and
+// where we have a yield to calculate against.
+//
+// Returns null when there's nothing useful to show (no withholding tax
+// possible here, or we don't have a confident yield to calculate with).
+// Never fabricates a number for VERIFY / INTL_VARIES / NONE tickers.
+
+const US_WHT_RATE = 0.15;
+
+export function estimateTaxDrag(ticker, accountKey, amount) {
+  if (!ticker || !amount || amount <= 0) return null;
+  if (!["RRSP_EXEMPT", "ALWAYS_APPLIES"].includes(ticker.whtCategory)) return null;
+  if (ticker.yieldPct == null) {
+    return { status: "unavailable" };
+  }
+
+  const annualDrag = amount * (ticker.yieldPct / 100) * US_WHT_RATE;
+
+  if (ticker.whtCategory === "RRSP_EXEMPT") {
+    if (accountKey === "RRSP") {
+      return { status: "sheltered", amount: 0 };
+    }
+    if (accountKey === "NONREG") {
+      return { status: "recoverable", amount: annualDrag };
+    }
+    // TFSA or FHSA — no mechanism to recover it here.
+    return { status: "permanent", amount: annualDrag };
+  }
+
+  // ALWAYS_APPLIES — the fund-level withholding happens no matter which
+  // account holds it. Non-registered at least allows a foreign tax credit.
+  return {
+    status: accountKey === "NONREG" ? "unavoidable_recoverable" : "unavoidable",
+    amount: annualDrag,
+  };
+}

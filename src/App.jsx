@@ -11,7 +11,7 @@ import HowItWorks from "./components/HowItWorks";
 import Footer from "./components/Footer";
 import BackToTop from "./components/BackToTop";
 import { findTicker } from "./data/tickers";
-import { recommend } from "./data/rules";
+import { recommend, estimateTaxDrag } from "./data/rules";
 import { useAccounts } from "./hooks/useAccounts";
 
 export default function App() {
@@ -111,6 +111,7 @@ export default function App() {
                   })
                 );
               }}
+              onEstimateTaxDrag={estimateTaxDrag}
             />
           )}
         </div>
