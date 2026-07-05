@@ -18,12 +18,6 @@ export default function Header() {
           >
             How it works
           </a>
-          <a
-            href="#buildings"
-            className="rounded-full border border-paper/15 px-4 py-1.5 font-mono text-xs uppercase tracking-wider-2 text-paper/70 transition hover:border-brass/60 hover:text-brass-light"
-          >
-            My accounts
-          </a>
         </div>
       </div>
     </header>

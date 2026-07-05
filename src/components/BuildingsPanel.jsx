@@ -33,7 +33,7 @@ function money(n) {
 
 export default function BuildingsPanel({ rawAccounts, setRoom }) {
   return (
-    <section id="buildings" className="relative z-10 px-6 pb-20 pt-10">
+    <section className="relative z-10 px-6 pb-20 pt-10">
       <div className="mx-auto max-w-4xl">
         <p
           id="step1-kicker"
