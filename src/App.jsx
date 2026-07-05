@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
+import FlowLine from "./components/FlowLine";
 import TickerSearch from "./components/TickerSearch";
 import AddressCard from "./components/AddressCard";
 import ManualClassify from "./components/ManualClassify";
@@ -81,7 +82,9 @@ export default function App() {
   return (
     <div className="min-h-screen bg-ink-900 bg-noise">
       <Header />
-      <main>
+      <main className="relative">
+        <FlowLine />
+
         <Hero />
 
         <BuildingsPanel rawAccounts={rawAccounts} setRoom={setRoom} />

@@ -30,16 +30,17 @@ export default function TickerSearch({ onSearch, loading }) {
   return (
     <section id="search" className="relative z-10 px-6 pb-2 pt-10">
       <div className="mx-auto max-w-4xl">
-        <p className="font-mono text-[0.7rem] uppercase tracking-wider-2 text-brass-light">
+        <p
+          id="step2-kicker"
+          className="font-mono text-[0.7rem] uppercase tracking-wider-2 text-brass-light"
+        >
           Step 2 · Enter a ticker
         </p>
-      </div>
-      <div className="mx-auto max-w-3xl text-center">
         <h2 className="mt-2 font-display text-2xl italic text-paper sm:text-3xl">
           Which account should it live in?
         </h2>
 
-        <form onSubmit={submit} className="mx-auto mt-6 flex max-w-md gap-2">
+        <form onSubmit={submit} className="mt-6 flex max-w-md gap-2">
           <input
             value={value}
             onChange={(e) => setValue(e.target.value)}
@@ -56,7 +57,7 @@ export default function TickerSearch({ onSearch, loading }) {
           </button>
         </form>
 
-        <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+        <div className="mt-4 flex flex-wrap items-center gap-2">
           <span className="font-mono text-[0.65rem] uppercase tracking-wider text-paper/50">
             Try tickers like
           </span>

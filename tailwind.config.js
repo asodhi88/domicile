@@ -44,14 +44,13 @@ export default {
         stamp: "0 2px 0 rgba(0,0,0,0.08)",
       },
       keyframes: {
-        float: {
-          "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-16px)" },
+        // Bright dash travels down the flow line (see FlowLine.jsx).
+        flowdash: {
+          to: { "stroke-dashoffset": "-100" },
         },
       },
       animation: {
-        float: "float 7s ease-in-out infinite",
-        "float-slow": "float 9s ease-in-out infinite",
+        flowdash: "flowdash 3.2s linear infinite",
       },
     },
   },
