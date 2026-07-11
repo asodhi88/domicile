@@ -1,5 +1,6 @@
 // src/components/AddressCard.jsx
 import { useState } from "react";
+import PriceTag from "./PriceTag";
 
 function VacancyBar({ available, total }) {
   const pct = total > 0 ? Math.min(100, Math.round((available / total) * 100)) : 0;
@@ -210,6 +211,8 @@ export default function AddressCard({ ticker, result, accounts, onLogPurchase, o
         <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/95">
           {ticker.symbol} · {ticker.name}
         </p>
+
+        <PriceTag key={ticker.symbol} symbol={ticker.symbol} />
 
         <h3 className="mt-3 font-display text-2xl italic leading-snug text-parchment-text sm:text-3xl">
           {ticker.symbol} should live in your{" "}
