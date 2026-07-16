@@ -64,7 +64,7 @@ export default function FeedbackForm() {
               </p>
               <button
                 onClick={reset}
-                className="mt-4 rounded-sm bg-brass px-4 py-2 font-mono text-xs uppercase tracking-wider-2 text-ink-900 transition hover:bg-brass-light"
+                className="mt-4 rounded-sm bg-brass px-4 py-2 font-mono text-xs uppercase tracking-wider-2 text-night transition hover:bg-brass-light"
               >
                 Close
               </button>
@@ -84,7 +84,7 @@ export default function FeedbackForm() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Your name"
-                  className="mt-1 w-full rounded-sm border border-parchment-dark bg-paper px-3 py-2 text-sm text-parchment-text outline-none focus:border-brass"
+                  className="mt-1 w-full rounded-sm border border-parchment-dark bg-field px-3 py-2 text-sm text-parchment-text outline-none focus:border-brass"
                 />
               </label>
 
@@ -100,7 +100,7 @@ export default function FeedbackForm() {
                   maxLength={MAX_FEEDBACK_LENGTH}
                   rows={4}
                   placeholder="What's working, what's missing, what's confusing?"
-                  className="mt-1 w-full resize-none rounded-sm border border-parchment-dark bg-paper px-3 py-2 text-sm text-parchment-text outline-none focus:border-brass"
+                  className="mt-1 w-full resize-none rounded-sm border border-parchment-dark bg-field px-3 py-2 text-sm text-parchment-text outline-none focus:border-brass"
                 />
                 <span className="mt-1 block text-right font-mono text-[0.65rem] text-parchment-text/80">
                   {feedback.length}/{MAX_FEEDBACK_LENGTH}
@@ -117,7 +117,7 @@ export default function FeedbackForm() {
                 <button
                   type="submit"
                   disabled={!feedback.trim() || status === "sending"}
-                  className="rounded-sm bg-brass px-4 py-2 font-mono text-xs uppercase tracking-wider-2 text-ink-900 transition hover:bg-brass-light disabled:cursor-not-allowed disabled:opacity-40"
+                  className="rounded-sm bg-brass px-4 py-2 font-mono text-xs uppercase tracking-wider-2 text-night transition hover:bg-brass-light disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   {status === "sending" ? "Sending…" : "Submit"}
                 </button>

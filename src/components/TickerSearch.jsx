@@ -51,7 +51,7 @@ export default function TickerSearch({ onSearch, loading }) {
           <button
             type="submit"
             disabled={loading}
-            className="shrink-0 rounded-sm bg-brass px-5 py-3 font-mono text-xs uppercase tracking-wider-2 text-ink-900 transition hover:bg-brass-light disabled:opacity-50"
+            className="shrink-0 rounded-sm bg-brass px-5 py-3 font-mono text-xs uppercase tracking-wider-2 text-night transition hover:bg-brass-light disabled:opacity-50"
           >
             {loading ? "Looking…" : "Search"}
           </button>

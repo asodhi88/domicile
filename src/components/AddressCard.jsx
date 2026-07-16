@@ -42,7 +42,7 @@ function LogPurchase({ account, label, available, onLog }) {
         Just bought this?
       </p>
       <div className="mt-2 flex items-center gap-2">
-        <div className="flex flex-1 items-center gap-1 rounded-sm border border-parchment-dark bg-paper px-3 py-2">
+        <div className="flex flex-1 items-center gap-1 rounded-sm border border-parchment-dark bg-field px-3 py-2">
           <span className="font-mono text-parchment-text/80">$</span>
           <input
             type="number"
@@ -58,7 +58,7 @@ function LogPurchase({ account, label, available, onLog }) {
         <button
           type="submit"
           disabled={!amount || Number(amount) <= 0}
-          className="shrink-0 rounded-sm bg-brass px-4 py-2 font-mono text-xs uppercase tracking-wider-2 text-ink-900 transition hover:bg-brass-light disabled:cursor-not-allowed disabled:opacity-40"
+          className="shrink-0 rounded-sm bg-brass px-4 py-2 font-mono text-xs uppercase tracking-wider-2 text-night transition hover:bg-brass-light disabled:cursor-not-allowed disabled:opacity-40"
         >
           Log it
         </button>
@@ -85,7 +85,7 @@ function TaxDragCallout({ ticker, accountKey, onEstimate }) {
       <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/90">
         See the actual dollar cost
       </p>
-      <div className="mt-2 flex items-center gap-1 rounded-sm border border-parchment-dark bg-paper px-3 py-2">
+      <div className="mt-2 flex items-center gap-1 rounded-sm border border-parchment-dark bg-field px-3 py-2">
         <span className="font-mono text-parchment-text/80">$</span>
         <input
           type="number"

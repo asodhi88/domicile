@@ -1,4 +1,6 @@
 // src/components/Header.jsx
+import ThemeToggle from "./ThemeToggle";
+
 export default function Header() {
   return (
     <header className="relative z-10">
@@ -22,6 +24,7 @@ export default function Header() {
             </span>
             How it works
           </a>
+          <ThemeToggle />
         </div>
       </div>
     </header>

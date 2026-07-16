@@ -4,33 +4,42 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Page-shell tokens are theme-aware: their channel values come from
+        // CSS variables in index.css that flip between dark (default) and
+        // light via the data-theme attribute. Written as rgb(var / <alpha>)
+        // so Tailwind opacity modifiers (e.g. text-paper/70) still work.
         ink: {
-          900: "#101B30",
-          800: "#152444",
-          700: "#1C2F58",
-          600: "#28406F",
+          900: "rgb(var(--color-ink-900) / <alpha-value>)",
+          800: "rgb(var(--color-ink-800) / <alpha-value>)",
+          700: "rgb(var(--color-ink-700) / <alpha-value>)",
+          600: "rgb(var(--color-ink-600) / <alpha-value>)",
         },
+        paper: "rgb(var(--color-paper) / <alpha-value>)",
+        brass: {
+          DEFAULT: "#BD8A43",
+          light: "rgb(var(--color-brass-light) / <alpha-value>)",
+        },
+        moss: {
+          DEFAULT: "#54744F",
+          light: "rgb(var(--color-moss-light) / <alpha-value>)",
+          bg: "#E4EADF",
+        },
+        // Parchment cards read as light surfaces in both themes — fixed.
         parchment: {
           DEFAULT: "#F1E7CF",
           light: "#FAF4E4",
           dark: "#E4D4AC",
           text: "#3B2F1E",
         },
-        paper: "#FBF7EE",
-        brass: {
-          DEFAULT: "#BD8A43",
-          light: "#D9B074",
-        },
-        moss: {
-          DEFAULT: "#54744F",
-          light: "#7C9A70",
-          bg: "#E4EADF",
-        },
         clay: {
           DEFAULT: "#A8482F",
           light: "#C77456",
           bg: "#EFDFD6",
         },
+        // Fixed helpers for overloaded uses: `field` = light input surface
+        // inside parchment cards; `night` = dark text on brass buttons.
+        field: "#FDFBF5",
+        night: "#101B30",
       },
       fontFamily: {
         display: ["Fraunces", "serif"],
