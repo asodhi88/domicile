@@ -19,8 +19,8 @@ export default function Header() {
             className="group flex shrink-0 items-center gap-2 rounded-full border border-paper/15 px-4 py-1.5 font-mono text-xs uppercase tracking-wider-2 text-paper/70 transition hover:border-brass/60 hover:text-brass-light"
           >
             <span className="relative inline-flex h-2 w-2 items-center justify-center">
-              <span className="absolute inline-flex h-2 w-2 animate-ping rounded-full bg-current opacity-70" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-current" />
+              <span className="absolute inline-flex h-2 w-2 animate-ping rounded-full bg-[#F4C542] opacity-70" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#F4C542]" />
             </span>
             How it works
           </a>

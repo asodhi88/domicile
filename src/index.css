@@ -21,7 +21,7 @@
     --color-ink-800: 247 244 237; /* raised surfaces: cards, inputs */
     --color-ink-700: 214 208 194; /* borders, track backgrounds */
     --color-ink-600: 198 191 174;
-    --color-paper: 43 39 32; /* foreground text (dark warm) */
+    --color-paper: 26 23 18; /* foreground text (near-black warm) */
     --color-brass-light: 138 94 34; /* kicker/accent readable on cream */
     --color-moss-light: 79 107 73; /* accent readable on cream */
     color-scheme: light;
