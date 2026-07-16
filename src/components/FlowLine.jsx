@@ -6,10 +6,12 @@
 // beside each. It overlays <main> (which must be position:relative) and
 // measures the real DOM anchors, so it tracks layout across breakpoints.
 // Purely decorative — aria-hidden, no text of its own.
+//
+// Colors come from the --flow-* CSS variables in index.css so they follow the
+// theme: brass/moss/clay gradient with yellow dots in dark mode, and the dark
+// theme's navy in light mode.
 
 import { useLayoutEffect, useRef, useState } from "react";
-
-const YELLOW = "#F4C542";
 
 export default function FlowLine() {
   const overlayRef = useRef(null);
@@ -83,9 +85,9 @@ export default function FlowLine() {
                 x2="0"
                 y2={geo.h}
               >
-                <stop offset="0%" stopColor="#BD8A43" />
-                <stop offset="55%" stopColor="#7C9A70" />
-                <stop offset="100%" stopColor="#C77456" />
+                <stop offset="0%" style={{ stopColor: "var(--flow-stop-1)" }} />
+                <stop offset="55%" style={{ stopColor: "var(--flow-stop-2)" }} />
+                <stop offset="100%" style={{ stopColor: "var(--flow-stop-3)" }} />
               </linearGradient>
             </defs>
 
@@ -118,11 +120,14 @@ export default function FlowLine() {
             >
               <span
                 className="absolute inset-0 animate-ping rounded-full opacity-70"
-                style={{ backgroundColor: YELLOW }}
+                style={{ backgroundColor: "var(--flow-dot)" }}
               />
               <span
                 className="relative h-3 w-3 rounded-full"
-                style={{ backgroundColor: YELLOW, boxShadow: `0 0 8px ${YELLOW}99` }}
+                style={{
+                  backgroundColor: "var(--flow-dot)",
+                  boxShadow: "0 0 8px var(--flow-dot-glow)",
+                }}
               />
             </span>
           ))}

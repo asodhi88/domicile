@@ -12,6 +12,14 @@
     --color-paper: 251 247 238;
     --color-brass-light: 217 176 116;
     --color-moss-light: 124 154 112;
+
+    /* FlowLine (see FlowLine.jsx): brass → moss → clay gradient, yellow dots. */
+    --flow-stop-1: #bd8a43;
+    --flow-stop-2: #7c9a70;
+    --flow-stop-3: #c77456;
+    --flow-dot: #f4c542;
+    --flow-dot-glow: rgba(244, 197, 66, 0.6);
+
     color-scheme: dark;
   }
 
@@ -24,6 +32,14 @@
     --color-paper: 26 23 18; /* foreground text (near-black warm) */
     --color-brass-light: 138 94 34; /* kicker/accent readable on cream */
     --color-moss-light: 79 107 73; /* accent readable on cream */
+
+    /* FlowLine takes the dark theme's navy so it reads as one solid blue. */
+    --flow-stop-1: #101b30;
+    --flow-stop-2: #101b30;
+    --flow-stop-3: #101b30;
+    --flow-dot: #101b30;
+    --flow-dot-glow: rgba(16, 27, 48, 0.45);
+
     color-scheme: light;
   }
 
