@@ -3,28 +3,9 @@
 @tailwind utilities;
 
 @layer base {
-  /* Page-shell palette as raw R G B channels. Default = dark theme. */
+  /* Page-shell palette as raw R G B channels. Default = light theme —
+     a warm, Claude-like off-white, never plain white. */
   :root {
-    --color-ink-900: 16 27 48;
-    --color-ink-800: 21 36 68;
-    --color-ink-700: 28 47 88;
-    --color-ink-600: 40 64 111;
-    --color-paper: 251 247 238;
-    --color-brass-light: 217 176 116;
-    --color-moss-light: 124 154 112;
-
-    /* FlowLine (see FlowLine.jsx): brass → moss → clay gradient, yellow dots. */
-    --flow-stop-1: #bd8a43;
-    --flow-stop-2: #7c9a70;
-    --flow-stop-3: #c77456;
-    --flow-dot: #f4c542;
-    --flow-dot-glow: rgba(244, 197, 66, 0.6);
-
-    color-scheme: dark;
-  }
-
-  /* Light theme — a warm, Claude-like off-white, never plain white. */
-  :root[data-theme="light"] {
     --color-ink-900: 236 232 222; /* page background (warm cream) */
     --color-ink-800: 247 244 237; /* raised surfaces: cards, inputs */
     --color-ink-700: 214 208 194; /* borders, track backgrounds */
@@ -41,6 +22,26 @@
     --flow-dot-glow: rgba(16, 27, 48, 0.45);
 
     color-scheme: light;
+  }
+
+  /* Dark theme — opt in via the switch. */
+  :root[data-theme="dark"] {
+    --color-ink-900: 16 27 48;
+    --color-ink-800: 21 36 68;
+    --color-ink-700: 28 47 88;
+    --color-ink-600: 40 64 111;
+    --color-paper: 251 247 238;
+    --color-brass-light: 217 176 116;
+    --color-moss-light: 124 154 112;
+
+    /* FlowLine (see FlowLine.jsx): brass → moss → clay gradient, yellow dots. */
+    --flow-stop-1: #bd8a43;
+    --flow-stop-2: #7c9a70;
+    --flow-stop-3: #c77456;
+    --flow-dot: #f4c542;
+    --flow-dot-glow: rgba(244, 197, 66, 0.6);
+
+    color-scheme: dark;
   }
 
   html {

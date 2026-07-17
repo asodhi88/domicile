@@ -184,7 +184,7 @@ export default function AddressCard({ ticker, result, accounts, onLogPurchase, o
         <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/90">
           {ticker.symbol} · {ticker.name}
         </p>
-        <h3 className="mt-2 font-display text-xl italic text-parchment-text">
+        <h3 className="mt-2 font-display font-medium text-xl italic text-parchment-text">
           {result.status === "verify" ? "Address unclear — check before assuming" : "Not fully supported yet"}
         </h3>
         <p className="mt-3 text-[0.95rem] leading-relaxed text-parchment-text/95">
@@ -214,7 +214,7 @@ export default function AddressCard({ ticker, result, accounts, onLogPurchase, o
 
         <PriceTag key={ticker.symbol} symbol={ticker.symbol} />
 
-        <h3 className="mt-3 font-display text-2xl italic leading-snug text-parchment-text sm:text-3xl">
+        <h3 className="mt-3 font-display font-medium text-2xl italic leading-snug text-parchment-text sm:text-3xl">
           {ticker.symbol} should live in your{" "}
           <span className="not-italic text-brass">{result.label}</span>
         </h3>

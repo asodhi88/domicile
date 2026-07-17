@@ -59,7 +59,7 @@ export default function FeedbackForm() {
         >
           {status === "done" ? (
             <>
-              <p className="font-display text-lg italic text-parchment-text">
+              <p className="font-display font-medium text-lg italic text-parchment-text">
                 Thank you. Your feedback will help us improve our service.
               </p>
               <button

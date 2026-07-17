@@ -36,7 +36,7 @@ export default function TickerSearch({ onSearch, loading }) {
         >
           Step 2 · Enter a ticker
         </p>
-        <h2 className="mt-2 font-display text-2xl italic text-paper sm:text-3xl">
+        <h2 className="mt-2 font-display font-medium text-2xl italic text-paper sm:text-3xl">
           Which account should it live in?
         </h2>
 

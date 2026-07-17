@@ -6,7 +6,7 @@ export default function HowItWorks() {
         <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-paper/70">
           How it works
         </p>
-        <h2 className="mt-2 font-display text-2xl italic text-paper sm:text-3xl">
+        <h2 className="mt-2 font-display font-normal text-2xl italic text-paper sm:text-3xl">
           Domicile tells Canadian self-directed investors which registered
           account (FHSA, TFSA, or RRSP) minimizes the tax drag for a given
           ETF or stock — and shows how much contribution room they have left
@@ -14,7 +14,7 @@ export default function HowItWorks() {
         </h2>
 
         <div className="mt-10">
-          <h3 className="font-display text-lg italic text-paper">
+          <h3 className="font-display font-medium text-lg italic text-paper">
             The problem it solves
           </h3>
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-paper/70">

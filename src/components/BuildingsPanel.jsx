@@ -41,7 +41,7 @@ export default function BuildingsPanel({ rawAccounts, setRoom }) {
         >
           Step 1 · Update your accounts
         </p>
-        <h2 className="mt-2 font-display text-2xl italic text-paper sm:text-3xl">
+        <h2 className="mt-2 font-display font-medium text-2xl italic text-paper sm:text-3xl">
           How much room is left in each account?
         </h2>
         <p className="mt-2 max-w-lg text-sm leading-relaxed text-paper/70">
@@ -60,7 +60,7 @@ export default function BuildingsPanel({ rawAccounts, setRoom }) {
               >
                 <div className="flex items-baseline justify-between">
                   <span
-                    className="font-display text-lg italic text-paper"
+                    className="font-display font-medium text-lg italic text-paper"
                     title={b.fullName}
                   >
                     {b.name}

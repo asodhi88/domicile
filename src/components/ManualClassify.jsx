@@ -44,7 +44,7 @@ export default function ManualClassify({ symbol, onClassify }) {
       <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-paper/60">
         {symbol}
       </p>
-      <h3 className="mt-2 font-display text-xl italic text-paper">
+      <h3 className="mt-2 font-display font-medium text-xl italic text-paper">
         Don't recognize this one — help me out
       </h3>
       <p className="mt-2 text-sm leading-relaxed text-paper/70">

@@ -1,6 +1,6 @@
 // src/components/ThemeToggle.jsx
 //
-// Light/dark switch for the whole page. Dark is the default; the choice is
+// Light/dark switch for the whole page. Light is the default; the choice is
 // persisted to localStorage and applied via the data-theme attribute on
 // <html> (see index.css for the token values, and index.html for the
 // before-paint script that prevents a flash on load).
@@ -10,10 +10,10 @@ import { useEffect, useState } from "react";
 const STORAGE_KEY = "domicile.theme";
 
 function getInitialTheme() {
-  if (typeof document === "undefined") return "dark";
-  return document.documentElement.getAttribute("data-theme") === "light"
-    ? "light"
-    : "dark";
+  if (typeof document === "undefined") return "light";
+  return document.documentElement.getAttribute("data-theme") === "dark"
+    ? "dark"
+    : "light";
 }
 
 export default function ThemeToggle() {
@@ -23,9 +23,9 @@ export default function ThemeToggle() {
   useEffect(() => {
     const root = document.documentElement;
     if (isLight) {
-      root.setAttribute("data-theme", "light");
-    } else {
       root.removeAttribute("data-theme");
+    } else {
+      root.setAttribute("data-theme", "dark");
     }
     try {
       localStorage.setItem(STORAGE_KEY, theme);
