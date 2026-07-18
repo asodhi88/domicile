@@ -1,7 +1,6 @@
 // src/App.jsx
-import { useEffect, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import Header from "./components/Header";
-import FlowLine from "./components/FlowLine";
 import TickerSearch from "./components/TickerSearch";
 import AddressCard from "./components/AddressCard";
 import ManualClassify from "./components/ManualClassify";
@@ -13,37 +12,40 @@ import { findTicker } from "./data/tickers";
 import { recommend, estimateTaxDrag } from "./data/rules";
 import { useAccounts } from "./hooks/useAccounts";
 
+// Shown before the visitor has searched anything, so the app demonstrates
+// what it produces instead of presenting an empty form.
+const EXAMPLE_SYMBOL = "VFV";
+
 export default function App() {
-  const { accounts, rawAccounts, setRoom, logPurchase } = useAccounts();
+  const { rawAccounts, setRoom, logPurchase } = useAccounts();
   const [loading, setLoading] = useState(false);
   const [ticker, setTicker] = useState(null);
-  const [result, setResult] = useState(null);
   const [needsManual, setNeedsManual] = useState(null); // symbol string or null
 
-  // Step 1 → Step 2 guidance: once all three accounts have a value, scroll
-  // the user down to the ticker search. Only fires on the transition so it
-  // doesn't hijack scrolling on every keystroke afterwards.
-  const allAccountsSet =
-    rawAccounts.FHSA !== null && rawAccounts.TFSA !== null && rawAccounts.RRSP !== null;
-  const wasAllSet = useRef(allAccountsSet);
-  useEffect(() => {
-    if (allAccountsSet && !wasAllSet.current) {
-      document.getElementById("search")?.scrollIntoView({ behavior: "smooth" });
-    }
-    wasAllSet.current = allAccountsSet;
-  }, [allAccountsSet]);
+  // The recommendation is derived, not stored, so it re-runs whenever the
+  // user edits their room. That matters now that setup comes *after* the
+  // search: adding room updates the card in place.
+  const result = useMemo(
+    () => (ticker ? recommend(ticker, rawAccounts) : null),
+    [ticker, rawAccounts]
+  );
+
+  const exampleTicker = useMemo(() => findTicker(EXAMPLE_SYMBOL), []);
+  const exampleResult = useMemo(
+    () => (exampleTicker ? recommend(exampleTicker, rawAccounts) : null),
+    [exampleTicker, rawAccounts]
+  );
+  const showExample = !ticker && !needsManual && !loading;
 
   async function handleSearch(rawSymbol) {
     const symbol = rawSymbol.trim().toUpperCase();
     setLoading(true);
     setNeedsManual(null);
-    setResult(null);
     setTicker(null);
 
     const curated = findTicker(symbol);
     if (curated) {
       setTicker(curated);
-      setResult(recommend(curated, accounts));
       setLoading(false);
       return;
     }
@@ -53,13 +55,11 @@ export default function App() {
       const data = await res.json();
 
       if (data.source === "twelvedata" && data.suggestion?.confidence === "auto") {
-        const liveTicker = {
+        setTicker({
           symbol: data.symbol || symbol,
           name: data.name || symbol,
           whtCategory: data.suggestion.whtCategory,
-        };
-        setTicker(liveTicker);
-        setResult(recommend(liveTicker, accounts));
+        });
       } else {
         // Low confidence, no key configured, not found, or upstream error —
         // hand it to the user rather than guessing.
@@ -75,45 +75,54 @@ export default function App() {
   function handleManualClassify(manualTicker) {
     setNeedsManual(null);
     setTicker(manualTicker);
-    setResult(recommend(manualTicker, accounts));
   }
 
   return (
     <div className="min-h-screen bg-ink-900 bg-noise">
       <Header />
-      <main className="relative">
-        <FlowLine />
+      <main>
+        {/* Primary loop: search + result first, room setup alongside it on
+            desktop and below it on mobile. */}
+        <div className="mx-auto max-w-6xl px-6 pt-10 lg:grid lg:grid-cols-[minmax(0,1fr)_340px] lg:items-start lg:gap-14">
+          <div>
+            <TickerSearch onSearch={handleSearch} loading={loading} />
 
-        <BuildingsPanel rawAccounts={rawAccounts} setRoom={setRoom} />
+            <div className="min-h-[60px] pb-8">
+              {needsManual && (
+                <ManualClassify
+                  symbol={needsManual}
+                  onClassify={handleManualClassify}
+                />
+              )}
 
-        <div className="mx-auto max-w-4xl border-t border-paper/10" />
+              {!needsManual && ticker && result && (
+                <AddressCard
+                  ticker={ticker}
+                  result={result}
+                  onLogPurchase={logPurchase}
+                  onEstimateTaxDrag={estimateTaxDrag}
+                />
+              )}
 
-        <TickerSearch onSearch={handleSearch} loading={loading} />
+              {showExample && exampleTicker && exampleResult && (
+                <AddressCard
+                  isExample
+                  ticker={exampleTicker}
+                  result={exampleResult}
+                  onEstimateTaxDrag={estimateTaxDrag}
+                />
+              )}
+            </div>
+          </div>
 
-        <div className="min-h-[60px] px-6 pb-8">
-          {needsManual && (
-            <ManualClassify symbol={needsManual} onClassify={handleManualClassify} />
-          )}
-          {!needsManual && ticker && result && (
-            <AddressCard
-              ticker={ticker}
-              result={result}
-              accounts={accounts}
-              onLogPurchase={(account, amount) => {
-                logPurchase(account, amount);
-                setResult(
-                  recommend(ticker, {
-                    ...accounts,
-                    [account]: Math.max(0, (accounts[account] ?? 0) - amount),
-                  })
-                );
-              }}
-              onEstimateTaxDrag={estimateTaxDrag}
-            />
-          )}
+          <div className="border-t border-paper/10 pt-10 lg:border-t-0 lg:pt-0">
+            <BuildingsPanel rawAccounts={rawAccounts} setRoom={setRoom} />
+          </div>
         </div>
 
-        <div className="mx-auto max-w-4xl border-t border-paper/10" />
+        <div className="mx-auto mt-4 max-w-6xl px-6">
+          <div className="border-t border-paper/10" />
+        </div>
 
         <HowItWorks />
       </main>

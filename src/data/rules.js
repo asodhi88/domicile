@@ -28,7 +28,10 @@ function reasonFor(category, account) {
         return "This is a US-domiciled holding, taxed directly by the US. The Canada-US tax treaty exempts US dividends from withholding tax specifically inside an RRSP — full amount, no leakage.";
       if (account === "NONREG")
         return "RRSP room is gone. In a non-registered account the 15% US withholding tax still applies, but you can claim it back as a foreign tax credit on your return — so it's recoverable, not lost.";
-      return "RRSP room is gone, and this is a US-domiciled holding — the 15% US withholding tax applies here and there's no mechanism to recover it inside a TFSA or FHSA. It's a quiet, permanent leak.";
+      // Shown both as the winner (when RRSP room is exhausted) and as an
+      // alternate under an RRSP recommendation, so it can't assume the RRSP
+      // is unavailable.
+      return "This is a US-domiciled holding, so the 15% US withholding tax applies here and there's no mechanism to recover it inside a TFSA or FHSA — a quiet, permanent leak. Worth using only once RRSP room is gone.";
     case "ALWAYS_APPLIES":
       if (account === "NONREG")
         return "This fund wraps US equities at the Canadian-fund level, so the ~15% withholding is deducted before it ever reaches your account — RRSP included. Account choice doesn't change that here. In a non-registered account you can at least claim a foreign tax credit for it.";
@@ -65,14 +68,21 @@ export function recommend(ticker, room) {
   const order = PRIORITY[ticker.whtCategory] || ["TFSA", "FHSA", "RRSP"];
   const steps = [];
 
+  // Room the user hasn't filled in yet is *unknown*, not zero. Only an
+  // explicitly entered $0 blocks an account. This is what lets someone
+  // search with no setup at all and still get the real recommendation —
+  // the advice is about tax treatment, not about whether we know their room.
   for (const account of order) {
-    const available = room?.[account] ?? 0;
+    const entered = room?.[account];
+    const known = entered !== null && entered !== undefined && entered !== "";
+    const available = known ? Number(entered) : null;
     steps.push({
       account,
       label: ACCOUNT_LABEL[account],
       available,
+      roomKnown: known,
       reason: reasonFor(ticker.whtCategory, account),
-      blocked: available <= 0,
+      blocked: known && available <= 0,
     });
   }
 
@@ -85,16 +95,19 @@ export function recommend(ticker, room) {
       label: winner.label,
       reason: winner.reason,
       available: winner.available,
+      roomKnown: winner.roomKnown,
       alternates: steps.filter((s) => s.account !== winner.account),
     };
   }
 
-  // All registered room is exhausted — fall back to non-registered.
+  // Every registered account has a known balance of $0 — fall back to
+  // non-registered. (Unreachable while any account's room is unknown.)
   return {
     status: "fallback",
     account: "NONREG",
     label: ACCOUNT_LABEL.NONREG,
     reason: reasonFor(ticker.whtCategory, "NONREG", ticker),
+    roomKnown: true,
     steps,
   };
 }

@@ -1,63 +1,65 @@
 // src/components/HowItWorks.jsx
+//
+// Educational section. Display serif is reserved for short headlines; every
+// multi-sentence block is Inter body text at a readable size and measure.
+
+const CATEGORIES = [
+  {
+    title: "US-domiciled holdings",
+    examples: "VOO, AAPL",
+    body: "The 15% US withholding tax on dividends drops to zero inside an RRSP under the treaty. In a TFSA or FHSA it's deducted permanently.",
+  },
+  {
+    title: "Canadian-listed US funds",
+    examples: "VFV, VUN",
+    body: "Withholding is taken at the fund level before it reaches any account, so no Canadian account can shelter it. Choose on other priorities.",
+  },
+  {
+    title: "Canadian equities",
+    examples: "XIC, RY",
+    body: "No foreign withholding applies anywhere. TFSA and FHSA shelter growth entirely; an RRSP defers the tax until withdrawal.",
+  },
+];
+
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="relative z-10 px-6 pb-20 pt-4">
-      <div className="mx-auto max-w-4xl">
-        <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-paper/70">
+    <section id="how-it-works" className="relative z-10 scroll-mt-8 px-6 pb-20 pt-14">
+      <div className="mx-auto max-w-6xl">
+        <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-paper/80">
           How it works
         </p>
-        <h2 className="mt-2 font-display font-normal text-2xl italic text-paper sm:text-3xl">
-          Domicile tells Canadian self-directed investors which registered
-          account (FHSA, TFSA, or RRSP) minimizes the tax drag for a given
-          ETF or stock — and shows how much contribution room they have left
-          before they need to spill into a non-registered account.
+        <h2 className="mt-2 font-display font-medium text-2xl italic text-paper sm:text-3xl">
+          Where your investments should live
         </h2>
+        <p className="mt-4 max-w-[35rem] text-[1.05rem] leading-relaxed text-paper/85">
+          Every ETF and stock has a registered account where the Canada–US tax
+          treaty treats it best. Most self-directed investors don't find out
+          until they've already lost money to it. Domicile tells you which
+          account minimizes the tax drag for a given holding, and whether you
+          still have room in it.
+        </p>
 
-        <div className="mt-10">
-          <h3 className="font-display font-medium text-lg italic text-paper">
-            The problem it solves
-          </h3>
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-paper/70">
-            Every ETF and stock has a registered account where the Canada–US
-            tax treaty treats it best. Most self-directed investors don't
-            know this until they've already lost money to it:
-          </p>
+        <h3 className="mt-12 font-display font-medium text-lg italic text-paper">
+          The three cases that matter
+        </h3>
 
-          <ul className="mt-5 space-y-4">
-            <li className="text-sm leading-relaxed text-paper/70">
-              <span className="font-mono text-xs uppercase tracking-wider text-brass-light/80">
-                US-domiciled holdings (VOO, AAPL, etc.)
-              </span>
-              <br />
-              The 15% US withholding tax on dividends is zero inside an RRSP
-              under the treaty. Inside a TFSA or FHSA it is quietly
-              deducted, permanently.
-            </li>
-            <li className="text-sm leading-relaxed text-paper/70">
-              <span className="font-mono text-xs uppercase tracking-wider text-brass-light/80">
-                Canadian-listed wrappers of US equities (VFV, VUN)
-              </span>
-              <br />
-              The withholding is taken at the fund level before it reaches
-              any account. No Canadian account type can shelter it, so
-              account choice shifts to other priorities.
-            </li>
-            <li className="text-sm leading-relaxed text-paper/70">
-              <span className="font-mono text-xs uppercase tracking-wider text-brass-light/80">
-                Pure Canadian equities
-              </span>
-              <br />
-              No foreign withholding applies anywhere. TFSA / FHSA shelter
-              growth from Canadian tax entirely; RRSP defers it to
-              withdrawal.
-            </li>
-          </ul>
-
-          <p className="mt-6 max-w-2xl text-sm leading-relaxed text-paper/70">
-            Domicile also tracks contribution room manually — users update
-            it themselves, and the tool tells them whether they have room in
-            the recommended account before buying.
-          </p>
+        <div className="mt-5 grid gap-4 md:grid-cols-3">
+          {CATEGORIES.map((c) => (
+            <div
+              key={c.title}
+              className="rounded-sm border border-paper/12 bg-ink-800 p-5"
+            >
+              <h4 className="font-display font-medium text-base italic text-paper">
+                {c.title}
+              </h4>
+              <p className="mt-1 font-mono text-[0.6rem] uppercase tracking-wider text-brass-light">
+                {c.examples}
+              </p>
+              <p className="mt-3 text-[0.95rem] leading-relaxed text-paper/85">
+                {c.body}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

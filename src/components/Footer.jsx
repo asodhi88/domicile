@@ -8,14 +8,14 @@ export default function Footer() {
         <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-paper/70">
           Important
         </p>
-        <p className="mt-2 max-w-xl text-[0.83rem] leading-relaxed text-paper/65">
+        <p className="mt-2 max-w-[28rem] text-[0.9rem] leading-relaxed text-paper/85">
           Domicile is an educational tool, not financial or tax advice. Rules
           are simplified, fund structures can change without notice, and the
           curated ticker list is hand-checked but not exhaustive. Confirm
           anything that matters with the fund provider's tax documentation
           or a qualified professional before acting on it.
         </p>
-        <p className="mt-6 font-mono text-[0.65rem] text-paper/45">
+        <p className="mt-6 max-w-prose font-mono text-[0.65rem] leading-relaxed text-paper/70">
           Built by Aman · domicile is not affiliated with the CRA, Vanguard,
           BlackRock, or any fund provider mentioned.
         </p>

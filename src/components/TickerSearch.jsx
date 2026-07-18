@@ -28,49 +28,49 @@ export default function TickerSearch({ onSearch, loading }) {
   }
 
   return (
-    <section id="search" className="relative z-10 px-6 pb-2 pt-10">
-      <div className="mx-auto max-w-4xl">
-        <p
-          id="step2-kicker"
-          className="font-mono text-[0.7rem] uppercase tracking-wider-2 text-brass-light"
+    <section id="search" className="relative z-10">
+      <p className="font-mono text-[0.7rem] uppercase tracking-wider-2 text-brass-light">
+        Step 1 · Enter a ticker
+      </p>
+      <h2 className="mt-2 font-display font-medium text-2xl italic text-paper sm:text-3xl">
+        Which account should it live in?
+      </h2>
+      <p className="mt-2 max-w-[30rem] text-[0.95rem] leading-relaxed text-paper/80">
+        Search any ETF or stock and Domicile tells you where it belongs. No
+        setup required.
+      </p>
+
+      <form onSubmit={submit} className="mt-6 flex max-w-md gap-2">
+        <input
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          placeholder="VFV, AAPL, XEQT…"
+          autoCapitalize="characters"
+          aria-label="Ticker symbol"
+          className="flex-1 rounded-sm border border-paper/15 bg-ink-800 px-4 py-3 font-mono text-base text-paper placeholder:text-paper/60 focus:border-brass-light/60"
+        />
+        <button
+          type="submit"
+          disabled={loading}
+          className="shrink-0 rounded-sm bg-brass px-5 py-3 font-mono text-xs uppercase tracking-wider-2 text-night transition hover:bg-brass-light disabled:opacity-50"
         >
-          Step 2 · Enter a ticker
-        </p>
-        <h2 className="mt-2 font-display font-medium text-2xl italic text-paper sm:text-3xl">
-          Which account should it live in?
-        </h2>
+          {loading ? "Looking…" : "Search"}
+        </button>
+      </form>
 
-        <form onSubmit={submit} className="mt-6 flex max-w-md gap-2">
-          <input
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            placeholder="VFV, AAPL, XEQT…"
-            autoCapitalize="characters"
-            className="flex-1 rounded-sm border border-paper/15 bg-ink-800 px-4 py-3 font-mono text-base text-paper placeholder:text-paper/50 focus:border-brass-light/60"
-          />
+      <div className="mt-4 flex flex-wrap items-center gap-2">
+        <span className="font-mono text-[0.65rem] uppercase tracking-wider text-paper/70">
+          Try tickers like
+        </span>
+        {examples.map((sym) => (
           <button
-            type="submit"
-            disabled={loading}
-            className="shrink-0 rounded-sm bg-brass px-5 py-3 font-mono text-xs uppercase tracking-wider-2 text-night transition hover:bg-brass-light disabled:opacity-50"
+            key={sym}
+            onClick={() => onSearch(sym)}
+            className="rounded-full border border-paper/15 px-2.5 py-1 font-mono text-xs text-paper/85 transition hover:border-brass-light/50 hover:text-brass-light"
           >
-            {loading ? "Looking…" : "Search"}
+            {sym}
           </button>
-        </form>
-
-        <div className="mt-4 flex flex-wrap items-center gap-2">
-          <span className="font-mono text-[0.65rem] uppercase tracking-wider text-paper/50">
-            Try tickers like
-          </span>
-          {examples.map((sym) => (
-            <button
-              key={sym}
-              onClick={() => onSearch(sym)}
-              className="rounded-full border border-paper/10 px-2.5 py-1 font-mono text-xs text-paper/75 transition hover:border-brass-light/50 hover:text-brass-light"
-            >
-              {sym}
-            </button>
-          ))}
-        </div>
+        ))}
       </div>
     </section>
   );

@@ -22,6 +22,14 @@ function money(n) {
   }).format(n || 0);
 }
 
+// Describes an account's room in words, including the "user hasn't told us"
+// case — we never claim $0 for room we simply don't know.
+function roomLabel(step) {
+  if (!step.roomKnown) return "room not added yet";
+  if (step.available <= 0) return "no room";
+  return `${money(step.available)} left`;
+}
+
 function LogPurchase({ account, label, available, onLog }) {
   const [amount, setAmount] = useState("");
   const [confirmed, setConfirmed] = useState(false);
@@ -82,9 +90,9 @@ function TaxDragCallout({ ticker, accountKey, onEstimate }) {
 
   return (
     <div className="mt-6 border-t border-parchment-dark pt-5">
-      <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/90">
+      <h4 className="font-display font-medium text-base italic text-parchment-text">
         See the actual dollar cost
-      </p>
+      </h4>
       <div className="mt-2 flex items-center gap-1 rounded-sm border border-parchment-dark bg-field px-3 py-2">
         <span className="font-mono text-parchment-text/80">$</span>
         <input
@@ -100,7 +108,7 @@ function TaxDragCallout({ ticker, accountKey, onEstimate }) {
       </div>
 
       {drag && drag.status === "unavailable" && (
-        <p className="mt-3 text-[0.85rem] leading-relaxed text-parchment-text/90">
+        <p className="mt-3 max-w-[30rem] text-[0.85rem] leading-relaxed text-parchment-text/90">
           Domicile doesn't have a confident dividend yield for {ticker.symbol} yet,
           so it can't turn this into a dollar figure. The account recommendation
           above still holds.
@@ -119,7 +127,7 @@ function TaxDragCallout({ ticker, accountKey, onEstimate }) {
             {money(drag.amount)}
             <span className="ml-2 font-body text-sm font-normal text-parchment-text/90">/year, gone for good.</span>
           </p>
-          <p className="mt-1.5 text-[0.85rem] leading-relaxed text-parchment-text/90">
+          <p className="mt-1.5 max-w-[30rem] text-[0.85rem] leading-relaxed text-parchment-text/90">
             Based on {ticker.symbol}'s approximate yield, this account has no way
             to recover US withholding tax — unlike an RRSP or a non-registered
             account.
@@ -133,7 +141,7 @@ function TaxDragCallout({ ticker, accountKey, onEstimate }) {
             {money(drag.amount)}
             <span className="ml-2 font-body text-sm font-normal text-parchment-text/90">/year withheld, but recoverable.</span>
           </p>
-          <p className="mt-1.5 text-[0.85rem] leading-relaxed text-parchment-text/90">
+          <p className="mt-1.5 max-w-[30rem] text-[0.85rem] leading-relaxed text-parchment-text/90">
             You can claim this back as a foreign tax credit on your return —
             it's a cash-flow timing cost, not a permanent loss.
           </p>
@@ -146,7 +154,7 @@ function TaxDragCallout({ ticker, accountKey, onEstimate }) {
             {money(drag.amount)}
             <span className="ml-2 font-body text-sm font-normal text-parchment-text/90">/year, baked into the fund — no account avoids it.</span>
           </p>
-          <p className="mt-1.5 text-[0.85rem] leading-relaxed text-parchment-text/90">
+          <p className="mt-1.5 max-w-[30rem] text-[0.85rem] leading-relaxed text-parchment-text/90">
             This is deducted at the fund level before it reaches any account,
             RRSP included. Account choice doesn't change this number.
           </p>
@@ -162,7 +170,7 @@ function TaxDragCallout({ ticker, accountKey, onEstimate }) {
         </div>
       )}
 
-      <p className="mt-3 text-[0.7rem] text-parchment-text/75">
+      <p className="mt-3 max-w-[28rem] text-[0.8rem] leading-relaxed text-parchment-text/80">
         Estimate only — based on an approximate, hand-set dividend yield, not
         live market data. Actual yield moves with price and payout changes.
       </p>
@@ -170,7 +178,37 @@ function TaxDragCallout({ ticker, accountKey, onEstimate }) {
   );
 }
 
-export default function AddressCard({ ticker, result, accounts, onLogPurchase, onEstimateTaxDrag }) {
+// Shown in place of the room bar when the user hasn't told us their room
+// yet. The recommendation above it stands on its own — this is an optional
+// next step, not a gate.
+function AddRoomPrompt({ label }) {
+  return (
+    <button
+      type="button"
+      onClick={() =>
+        document
+          .getElementById("accounts")
+          ?.scrollIntoView({ behavior: "smooth", block: "start" })
+      }
+      className="mt-6 flex w-full items-center justify-between gap-3 rounded-sm border border-dashed border-parchment-dark px-4 py-3 text-left transition hover:border-brass focus-visible:border-brass"
+    >
+      <span className="text-[0.9rem] leading-snug text-parchment-text/95">
+        Add your contribution room to see if you have space in your {label}
+      </span>
+      <span aria-hidden="true" className="shrink-0 text-brass">
+        →
+      </span>
+    </button>
+  );
+}
+
+export default function AddressCard({
+  ticker,
+  result,
+  isExample = false,
+  onLogPurchase,
+  onEstimateTaxDrag,
+}) {
   if (!ticker || !result) return null;
 
   // --- Cases where we deliberately don't assign an address ---
@@ -196,14 +234,20 @@ export default function AddressCard({ ticker, result, accounts, onLogPurchase, o
 
   const isFallback = result.status === "fallback";
   const accountKeyForRoom = result.account === "NONREG" ? null : result.account;
-  const total = accountKeyForRoom ? accounts[accountKeyForRoom] : null;
+  const roomKnown = result.roomKnown !== false;
+  const total = result.available;
 
   return (
     <div className="relative mx-auto mt-8 max-w-xl">
       {/* stamp */}
-      {!isFallback && (
+      {!isFallback && !isExample && (
         <div className="absolute -right-3 -top-4 z-10 rotate-6 rounded-sm border-2 border-moss bg-moss-bg px-3 py-1 font-mono text-[0.65rem] font-semibold uppercase tracking-wider-2 text-moss shadow-stamp">
           Recommended Account
+        </div>
+      )}
+      {isExample && (
+        <div className="absolute -right-3 -top-4 z-10 rotate-6 rounded-sm border-2 border-brass bg-parchment px-3 py-1 font-mono text-[0.65rem] font-semibold uppercase tracking-wider-2 text-brass shadow-stamp">
+          Example
         </div>
       )}
 
@@ -219,11 +263,17 @@ export default function AddressCard({ ticker, result, accounts, onLogPurchase, o
           <span className="not-italic text-brass">{result.label}</span>
         </h3>
 
-        <p className="mt-4 text-[0.97rem] leading-relaxed text-parchment-text/95">
+        <p className="mt-4 max-w-[30rem] text-[0.97rem] leading-relaxed text-parchment-text/95">
           {result.reason}
         </p>
 
-        {accountKeyForRoom && (
+        {isExample && (
+          <p className="mt-4 text-[0.85rem] leading-relaxed text-parchment-text/80">
+            This is an example. Search a ticker above to see your own →
+          </p>
+        )}
+
+        {accountKeyForRoom && roomKnown && (
           <div className="mt-6">
             <div className="mb-1.5 flex items-baseline justify-between font-mono text-xs uppercase tracking-wider text-parchment-text/90">
               <span>Room left in {result.label}</span>
@@ -233,7 +283,11 @@ export default function AddressCard({ ticker, result, accounts, onLogPurchase, o
           </div>
         )}
 
-        {accountKeyForRoom && onLogPurchase && (
+        {accountKeyForRoom && !roomKnown && !isExample && (
+          <AddRoomPrompt label={result.label} />
+        )}
+
+        {accountKeyForRoom && roomKnown && onLogPurchase && (
           <LogPurchase
             account={accountKeyForRoom}
             label={result.label}
@@ -252,14 +306,14 @@ export default function AddressCard({ ticker, result, accounts, onLogPurchase, o
 
         {isFallback && result.steps && (
           <div className="mt-6 border-t border-parchment-dark pt-5">
-            <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/90">
-              Why Not Registered Accounts
-            </p>
+            <h4 className="font-display font-medium text-base italic text-parchment-text">
+              Why not a registered account?
+            </h4>
             <ul className="mt-2 space-y-1.5">
               {result.steps.map((s) => (
                 <li key={s.account} className="text-sm text-parchment-text/90">
                   <span className="font-medium text-parchment-text/95">{s.label}:</span>{" "}
-                  {money(s.available)} left{s.available <= 0 ? " — no room" : ""}
+                  {roomLabel(s)}
                 </li>
               ))}
             </ul>
@@ -268,15 +322,15 @@ export default function AddressCard({ ticker, result, accounts, onLogPurchase, o
 
         {!isFallback && result.alternates?.length > 0 && (
           <details className="mt-6 border-t border-parchment-dark pt-4 text-sm text-parchment-text/90">
-            <summary className="cursor-pointer font-mono text-[0.65rem] uppercase tracking-wider-2 text-parchment-text/90">
-              Other Accounts Considered
+            <summary className="cursor-pointer font-display font-medium text-base italic text-parchment-text">
+              Other accounts considered
             </summary>
             <ul className="mt-3 space-y-3">
               {result.alternates.map((alt) => (
                 <li key={alt.account}>
                   <span className="font-medium text-parchment-text/95">{alt.label}</span>
-                  {alt.blocked ? " — no room" : ` — ${money(alt.available)} left`}
-                  <p className="mt-0.5 text-[0.85rem] leading-relaxed text-parchment-text/90">
+                  {` — ${roomLabel(alt)}`}
+                  <p className="mt-0.5 max-w-[30rem] text-[0.85rem] leading-relaxed text-parchment-text/90">
                     {alt.reason}
                   </p>
                 </li>

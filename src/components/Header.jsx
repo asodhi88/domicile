@@ -19,14 +19,14 @@ export default function Header() {
             className="group flex shrink-0 items-center gap-2 rounded-full border border-paper/15 px-4 py-1.5 font-mono text-xs uppercase tracking-wider-2 text-paper/70 transition hover:border-brass/60 hover:text-brass-light"
           >
             <span className="relative inline-flex h-2 w-2 items-center justify-center">
-              {/* Shares the flow line's dot color so it tracks the theme. */}
+              {/* Theme-aware accent dot. */}
               <span
                 className="absolute inline-flex h-2 w-2 animate-ping rounded-full opacity-70"
-                style={{ backgroundColor: "var(--flow-dot)" }}
+                style={{ backgroundColor: "var(--pulse-dot)" }}
               />
               <span
                 className="relative inline-flex h-2 w-2 rounded-full"
-                style={{ backgroundColor: "var(--flow-dot)" }}
+                style={{ backgroundColor: "var(--pulse-dot)" }}
               />
             </span>
             How it works

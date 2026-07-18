@@ -41,7 +41,7 @@ export default function ManualClassify({ symbol, onClassify }) {
 
   return (
     <div className="mx-auto mt-8 max-w-xl rounded-sm border border-paper/12 bg-ink-800 p-7">
-      <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-paper/60">
+      <p className="font-mono text-[0.65rem] uppercase tracking-wider-2 text-paper/80">
         {symbol}
       </p>
       <h3 className="mt-2 font-display font-medium text-xl italic text-paper">
@@ -60,7 +60,7 @@ export default function ManualClassify({ symbol, onClassify }) {
             className="block w-full rounded-sm border border-paper/10 px-4 py-3 text-left transition hover:border-brass-light hover:bg-ink-700"
           >
             <span className="block text-sm font-medium text-paper/90">{opt.title}</span>
-            <span className="block text-xs text-paper/65">{opt.hint}</span>
+            <span className="block text-xs leading-relaxed text-paper/85">{opt.hint}</span>
           </button>
         ))}
       </div>
