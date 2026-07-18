@@ -29,7 +29,7 @@ export default function TickerSearch({ onSearch, loading }) {
 
   return (
     <section id="search" className="relative z-10">
-      <p className="font-mono text-[0.7rem] uppercase tracking-wider-2 text-brass-light">
+      <p className="font-mono text-[0.7rem] uppercase tracking-wider-2 text-brass-deep">
         Step 1 · Enter a ticker
       </p>
       <h2 className="mt-2 font-display font-medium text-2xl italic text-paper sm:text-3xl">

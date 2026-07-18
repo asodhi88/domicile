@@ -34,7 +34,7 @@ function money(n) {
 export default function BuildingsPanel({ rawAccounts, setRoom }) {
   return (
     <section id="accounts" className="relative z-10 scroll-mt-8">
-      <p className="font-mono text-[0.7rem] uppercase tracking-wider-2 text-brass-light">
+      <p className="font-mono text-[0.7rem] uppercase tracking-wider-2 text-brass-deep">
         Step 2 · Add your room (optional)
       </p>
       <h2 className="mt-2 font-display font-medium text-xl italic text-paper">

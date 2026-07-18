@@ -12,10 +12,6 @@ import { findTicker } from "./data/tickers";
 import { recommend, estimateTaxDrag } from "./data/rules";
 import { useAccounts } from "./hooks/useAccounts";
 
-// Shown before the visitor has searched anything, so the app demonstrates
-// what it produces instead of presenting an empty form.
-const EXAMPLE_SYMBOL = "VFV";
-
 export default function App() {
   const { rawAccounts, setRoom, logPurchase } = useAccounts();
   const [loading, setLoading] = useState(false);
@@ -29,13 +25,6 @@ export default function App() {
     () => (ticker ? recommend(ticker, rawAccounts) : null),
     [ticker, rawAccounts]
   );
-
-  const exampleTicker = useMemo(() => findTicker(EXAMPLE_SYMBOL), []);
-  const exampleResult = useMemo(
-    () => (exampleTicker ? recommend(exampleTicker, rawAccounts) : null),
-    [exampleTicker, rawAccounts]
-  );
-  const showExample = !ticker && !needsManual && !loading;
 
   async function handleSearch(rawSymbol) {
     const symbol = rawSymbol.trim().toUpperCase();
@@ -104,13 +93,10 @@ export default function App() {
                 />
               )}
 
-              {showExample && exampleTicker && exampleResult && (
-                <AddressCard
-                  isExample
-                  ticker={exampleTicker}
-                  result={exampleResult}
-                  onEstimateTaxDrag={estimateTaxDrag}
-                />
+              {!needsManual && !ticker && !loading && (
+                <p className="pt-2 text-sm text-paper/70">
+                  Your result will appear here.
+                </p>
               )}
             </div>
           </div>

@@ -18,6 +18,9 @@ export default {
         brass: {
           DEFAULT: "#BD8A43",
           light: "rgb(var(--color-brass-light) / <alpha-value>)",
+          // High-contrast brass for section kickers. Kept separate from
+          // `light` because that one also backs button hover states.
+          deep: "rgb(var(--color-brass-deep) / <alpha-value>)",
         },
         moss: {
           DEFAULT: "#54744F",

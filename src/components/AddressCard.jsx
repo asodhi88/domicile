@@ -205,7 +205,6 @@ function AddRoomPrompt({ label }) {
 export default function AddressCard({
   ticker,
   result,
-  isExample = false,
   onLogPurchase,
   onEstimateTaxDrag,
 }) {
@@ -240,14 +239,9 @@ export default function AddressCard({
   return (
     <div className="relative mx-auto mt-8 max-w-xl">
       {/* stamp */}
-      {!isFallback && !isExample && (
+      {!isFallback && (
         <div className="absolute -right-3 -top-4 z-10 rotate-6 rounded-sm border-2 border-moss bg-moss-bg px-3 py-1 font-mono text-[0.65rem] font-semibold uppercase tracking-wider-2 text-moss shadow-stamp">
           Recommended Account
-        </div>
-      )}
-      {isExample && (
-        <div className="absolute -right-3 -top-4 z-10 rotate-6 rounded-sm border-2 border-brass bg-parchment px-3 py-1 font-mono text-[0.65rem] font-semibold uppercase tracking-wider-2 text-brass shadow-stamp">
-          Example
         </div>
       )}
 
@@ -267,12 +261,6 @@ export default function AddressCard({
           {result.reason}
         </p>
 
-        {isExample && (
-          <p className="mt-4 text-[0.85rem] leading-relaxed text-parchment-text/80">
-            This is an example. Search a ticker above to see your own →
-          </p>
-        )}
-
         {accountKeyForRoom && roomKnown && (
           <div className="mt-6">
             <div className="mb-1.5 flex items-baseline justify-between font-mono text-xs uppercase tracking-wider text-parchment-text/90">
@@ -283,7 +271,7 @@ export default function AddressCard({
           </div>
         )}
 
-        {accountKeyForRoom && !roomKnown && !isExample && (
+        {accountKeyForRoom && !roomKnown && (
           <AddRoomPrompt label={result.label} />
         )}
 
